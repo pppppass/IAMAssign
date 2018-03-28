@@ -1,0 +1,7 @@
+# Temporary files
+*~
+
+# Binary files
+*.pdf
+__pycache__/
+.ipynb_checkpoints/
