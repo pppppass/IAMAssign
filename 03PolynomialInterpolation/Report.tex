@@ -1,0 +1,170 @@
+% !TeX encoding = UTF-8
+% !TeX program = lualatex
+% !TeX spellcheck = en_US
+
+% Author : Zhihan Li
+% Description : PKU-style paper template
+
+\documentclass[english, nochinese]{../TeXTemplate/pkupaper}
+
+\usepackage[paper, pgf, algorithm]{../TeXTemplate/def}
+
+\newcommand{\cuniversity}{Peking University}
+\newcommand{\cthesisname}{Introduction to Applied Mathematics}
+\newcommand{\titlemark}{Assignment for Lecture 3}
+
+\DeclareRobustCommand{\authoring}%
+{%
+\begin{tabular}{c}%
+Zhihan Li \\%
+1600010653%
+\end{tabular}%
+}
+
+\title{\titlemark}
+\author{\authoring}
+\begin{document}
+
+\maketitle
+
+\begin{thmquestion}
+\ 
+\begin{thmanswer}
+The graph for interpolations to $ f_1 \rbr{x} = \frac{1}{ 1 + x^2 } $ using equally spaced nodes is shown in Figure \ref{Fig:SpaceTan}.
+\begin{figure}[htbp]
+\centering \scalebox{0.8}{\input{Figure01.pgf}}
+\centering \scalebox{0.8}{\input{Figure02.pgf}}
+\caption{Interpolating polynomials of degree $n$ to $f_1$ using equally spaced nodes} \label{Fig:SpaceTan}
+\end{figure}
+The graph for interpolations of $ f_2 \rbr{x} = \se^{-x^2} $ using equally spaced nodes is shown in Figure \ref{Fig:SpaceExp}.
+\begin{figure}[htbp]
+\centering \scalebox{0.8}{\input{Figure03.pgf}}
+\centering \scalebox{0.8}{\input{Figure04.pgf}}
+\caption{Interpolation polynomials of degree $n$ to $f_2$ using equally spaced nodes} \label{Fig:SpaceExp}
+\end{figure}
+Note that polynomials of odd and even orders behave differently, and therefore plots are given separately.
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{thmquestion}
+\
+\begin{thmanswer}
+The coefficient is given by
+\begin{equation}
+c_n = \sume{i}{0}{n}{ y_i \prodb{\sarr{c}{ j = 0 \\ j \neq i }}{n}{\frac{1}{ x_i - x_j }} }.
+\end{equation}
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{thmquestion}
+\
+\begin{thmanswer}
+The algorithm is described in Algorithm \ref{Alg:Calc}.
+
+\begin{algorithm}
+\SetAlgoLined
+
+\KwData{$d_i$ where $i$ ranges from $1$ to $n$}
+\KwResult{$u$}
+
+$ u \slar 0 $\;
+\For{$i$ from $n$ to $1$}
+{
+	$ u \slar u + 1$ \;
+	$ u \slar u d_i $\;
+}
+
+\caption{Calculation of $u$} \label{Alg:Calc}
+\end{algorithm}
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmanswer}
+Claim that $T_n$ is even if $n$ is even, or odd if $n$ is odd. Perform mathematical induction on $n$.
+
+When $ n = 0, 1 $, $ T_n \rbr{x} = 1, x $ and is even and odd respective, satisfying the claim.
+
+Suppose the case $ n \le k $ is done where $ k \ge 1 $, and then consider the case $ n = k + 1 $. If $k$ is itself even, then $T_k$ is even and $ T_{ k - 1 } $ is odd. Therefore, from
+\begin{equation}
+T_{ k + 1 } \rbr{x} = 2 x T_k \rbr{x} - T_{ k - 1 } \rbr{x}
+\end{equation}
+is odd. If $k$ is odd, then $T_k$ is odd and $ T_{ k - 1 } $ is even, and similarly $ T_{ k + 1 } $ being even follows. Combing these two situation, the claim holds for $ n = k + 1 $.
+
+By mathematical induction, the claim that $T_n$ and $n$ have the same oddness and evenness for $ n \in \Nset $ is proven.
+
+\sqed
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmanswer}
+Zeros of Chebyshev polynomial $T_n$ (scaled to the interval $ \sbr{ -5, 5 } $) are given by
+\begin{equation}
+t_i = 5 \cos \frac{ \rbr{ 2 i + 1 } \pi }{ 2 n }. \rbr{ i = 0, 1, \cdots, n - 1 }
+\end{equation}
+
+The graph for interpolations to $ f_1 \rbr{x} = \frac{1}{ 1 + x^2 } $ using zeros of Chebyshev polynomials is shown in Figure \ref{Fig:CheTan}.
+\begin{figure}[htbp]
+\centering \scalebox{0.8}{\input{Figure05.pgf}}
+\centering \scalebox{0.8}{\input{Figure06.pgf}}
+\caption{Interpolating polynomials of degree $n$ to $f_1$ using zeros of $T_n$} \label{Fig:CheTan}
+\end{figure}
+The graph for interpolations of $ f_2 \rbr{x} = \se^{-x^2} $ using zeros of Chebyshev polynomials is shown in Figure \ref{Fig:CheExp}.
+\begin{figure}[htbp]
+\centering \scalebox{0.8}{\input{Figure07.pgf}}
+\centering \scalebox{0.8}{\input{Figure08.pgf}}
+\caption{Interpolation polynomials of degree $n$ to $f_2$ using zeros of $T_n$} \label{Fig:CheExp}
+\end{figure}
+Note that polynomials of odd and even orders behave differently, and therefore plots are given separately.
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{thmquestion}
+\
+\begin{thmanswer}
+The matrix is
+\begin{equation}
+A = \msbr{ u_1 & h_1 & & & & & \\ h_1 & u_2 & h_2 & & & \\ & h_2 & u_3 & h_3 & & \\ & & \ddots & \ddots & \ddots & \\ & & & h_{ n - 3 } & u_{ n - 2 } & h_{ n - 2 } \\ & & & & h_{ n - 2 } & u_{ n - 1 } }.
+\end{equation}
+Note that because $ u_1 = 2 \rbr{ h_0 + h_1 } > h_1 $, $ u_i = 2 \rbr{ h_i + h_{ i - 1 } } > h_i + h_{ i - 1 } \crbr{ i = 2, 3, \cdots, n - 2 } $, $ u_{ n - 1 } = 2 \rbr{ h_{ n - 2 } + h_{ n - 1 } } > h_{ n - 2 } $, therefore $A$ is strictly diagonally dominant. From the proof on the slide, one knows LU-decomposition can be perform on $A$. That is, $ A = L U $ with lower triangular $L$ and upper triangular $U$. From the slide, one knows the diagonal entries of $U$ can be set to $1$ and that of $L$ are all non-zero. Therefore, $L$ and $U$ are non-singular and consequently $A$ is invertible.
+
+\sqed
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{thmquestion}
+\
+\begin{thmanswer}
+Note that there are $ 3 n $ variables for a quadratic spline with $ n + 1 $ nodes, while the number of constraints are $ 2 \rbr{ n - 1 } + \rbr{ n - 1 } + 2 = 3 n - 1 $, where $ 2 \rbr{ n - 1 } $ stands for values at internal nodes, $ \rbr{ n - 1 } $ stands for the continuity of first-order derivative and $2$ stands for values at end points. Therefore, there are (at least) one degree of freedom and one specific constraint should be forced for uniqueness. For example, such constraint may be that the first-order derivative at one end point is fixed, or that first-order derivatives at both end points coincides. Additionally, one may also consider the spline to be an optimization problem. For example, one may try to minimize
+\begin{equation}
+E = \intb{t_0}{t_{n}}{ \rbr{ S' \rbr{x} }^2 \sd x },
+\end{equation}
+which stands for the elastic energy if the spline is thought to be a thin stick.
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{thmquestion}
+\
+\begin{thmanswer}
+Assume $u$ to be $C^4$. Therefore, we have
+\begin{align}
+u_{ i - 1 } &= u \rbr{ x - h } = u \rbr{x} - h u' \rbr{x} + \frac{h^2}{2} u'' \rbr{x} - \frac{h^3}{6} u^{\rbr{3}} \rbr{x} + O \rbr{h^4}, \\
+u_{ i + 1 } &= u \rbr{ x + h } = u \rbr{x} + h u' \rbr{x} + \frac{h^2}{2} u'' \rbr{x} + \frac{h^3}{6} u^{\rbr{3}} \rbr{x} + O \rbr{h^4}, \\
+\end{align}
+and therefore
+\begin{equation}
+u_{ i - 1 } - 2 u_i + u_{ i + 1 } = h^2 u'' \rbr{x} + O \rbr{h^4},
+\end{equation}
+which yields
+\begin{equation}
+\frac{ \sd[2] \rbr{u} }{ \sd x^2 } - \frac{ u_{ i - 1 } - 2 u_i + u_{ i + 1 } }{h^2} = O \rbr{h^2}.
+\end{equation}
+
+\sqed
+\end{thmanswer}
+\end{thmquestion}
+
+\end{document}

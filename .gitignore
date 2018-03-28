@@ -1,5 +1,12 @@
 # Temporary files
 *~
+*.aux
+*.bcf
+*.log
+*.out
+*.thm
+*.run.xml
+*.synctex.gz
 
 # Binary files
 *.pdf
