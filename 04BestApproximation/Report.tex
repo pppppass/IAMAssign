@@ -1,0 +1,255 @@
+% !TeX encoding = UTF-8
+% !TeX program = lualatex
+% !TeX spellcheck = en_US
+
+% Author : Zhihan Li
+% Description : Report for Lecture 4 --- Best Approximation
+
+\documentclass[english, nochinese]{../TeXTemplate/pkupaper}
+
+\usepackage[paper, cmrgreekup]{../TeXTemplate/def}
+
+\newcommand{\cuniversity}{Peking University}
+\newcommand{\cthesisname}{Introduction to Applied Mathematics}
+\newcommand{\titlemark}{Assignment for Lecture 4}
+
+\DeclareRobustCommand{\authoring}%
+{%
+\begin{tabular}{c}%
+Zhihan Li \\%
+1600010653%
+\end{tabular}%
+}
+
+\title{\titlemark}
+\author{\authoring}
+\begin{document}
+
+\maketitle
+
+\begin{thmquestion}
+\
+\begin{thmproof}
+Prove by contradiction. Otherwise, there exists $ c = \msbr{ c_1 & c_2 & \cdots & c_m }^{\rmut} $, such that $ A c = 0 $, and therefore $ c^{\dag} A c = 0 $.
+
+Note that
+\begin{equation}
+\begin{split}
+c^{\dag} A c &= \sume{i}{1}{m}{\sume{j}{1}{m}{ \overline{c_j} \pbr{ g_j, g_i } c_i }} \\
+&= \pbr{ \sume{j}{1}{m}{ \overline{c_j} g_j }, \sume{i}{1}{m}{ \overline{c_i} g_i } },
+\end{split}
+\end{equation}
+and consequently from the positively definiteness
+\begin{equation}
+\sume{i}{1}{m}{ \overline{c_i} g_i } = 0.
+\end{equation}
+However this contradicts the given linear independence, which shows $A$ is non-singular.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmanswer}
+Let the best approximation be $ g = \alpha x + \beta x^3 + \gamma x^5 $. From
+\begin{equation}
+f - g \perp \opspan \cbr{ x, x^3, x^5 },
+\end{equation}
+it can be derived that
+\begin{gather}
+\pbr{ f - g, x } = \pbr{ f - g, x^3 } = \pbr{ f - g, x^5 } = 0.
+\end{gather}
+Direct computation leads to the system
+\begin{equation}
+\left[\begin{matrix}\frac{2}{3} & \frac{2}{5} & \frac{2}{7}\\\frac{2}{5} & \frac{2}{7} & \frac{2}{9}\\\frac{2}{7} & \frac{2}{9} & \frac{2}{11}\end{matrix}\right] \msbr{ \alpha \\ \beta \\ \gamma } = \left[\begin{matrix}- 2 \cos{\left (1 \right )} + 2 \sin{\left (1 \right )}\\- 6 \sin{\left (1 \right )} + 10 \cos{\left (1 \right )}\\- 202 \cos{\left (1 \right )} + 130 \sin{\left (1 \right )}\end{matrix}\right],
+\end{equation}
+whose solution is
+\begin{equation}
+\msbr{ \alpha \\ \beta \\ \gamma } = \left[\begin{matrix}- \frac{139965}{8} \cos{\left (1 \right )} + 11235 \sin{\left (1 \right )}\\- \frac{104265}{2} \sin{\left (1 \right )} + \frac{324765}{4} \cos{\left (1 \right )}\\- \frac{582813}{8} \cos{\left (1 \right )} + \frac{93555}{2} \sin{\left (1 \right )}\end{matrix}\right].
+\end{equation}
+Therefore, the final solution is
+\begin{equation}
+\begin{split}
+g &= x^{5} \left(- \frac{582813}{8} \cos{\left (1 \right )} + \frac{93555}{2} \sin{\left (1 \right )}\right) \\
+&+ x^{3} \left(- \frac{104265}{2} \sin{\left (1 \right )} + \frac{324765}{4} \cos{\left (1 \right )}\right) \\
+&+ x \left(- \frac{139965}{8} \cos{\left (1 \right )} + 11235 \sin{\left (1 \right )}\right).
+\end{split}
+\end{equation}
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{thmquestion}
+\
+\begin{thmproof}
+Because
+\begin{equation}
+\norm{u_i} = \frac{\norm{ v_i - \sume{j}{1}{ i - 1 }{ \pbr{ v_i, u_j } u_j } }}{\norm{ v_i - \sume{j}{1}{ i - 1 }{ \pbr{ v_i, u_j } u_j } }} = 1
+\end{equation}
+for $ 1 \le i \le n $, it remains to prove $u_i$ are pairwise perpendicular.
+
+Perform mathematical induction to prove that for a given $i$ with $ 1 \le i \le n $, $ u_j \perp u_k $ is always true for $ 1 \le j < k \le i $. Suppose the case $ i = m - 1  $ is done and then consider the case $ i = m $, where $ 1 < m \le n $. It is sufficient to prove $ u_m \perp u_k $ for $ 1 \le k < m $, which directly follows from
+\begin{equation}
+\pbr{ u_m, u_k } = \pbr{ v_m, u_k  } - \sume{j}{1}{ m - 1 }{ \pbr{ v_m, u_j } \pbr{ u_j, u_k } } = \pbr{ v_m, u_k } - \pbr{ v_m, u_k } \norm{u_k} = 0.
+\end{equation}
+Therefore, the induction is finished and we obtain $ u_j \perp u_k $ for $ 1 \le j < k \le n $.
+
+As shown above, $u_i$ are pairwise orthogonal and normalized, which means they form a orthonormal basis.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\
+\begin{thmproof}
+The leading coefficient of $L_n$ is
+\begin{equation}
+\frac{ \rbr{ 2 n } ! }{ 2^n n ! n ! } = \frac{ \rbr{ 2 n - 1 } !! }{ n ! },
+\end{equation}
+and therefore
+\begin{equation}
+g = \frac{ n ! }{ \rbr{ 2 n - 1 } !! } L_n
+\end{equation}
+is monic. Note that $ L_0, L_1, \cdots, L_{ n - 1 } $ form a basis of $ \opspan \cbr{ 1, x, \cdots, x^{ n - 1 } } $. Therefore, for any monic polynomial $f$ of degree $n$, there exists $ c_i \crbr{ 0 \le i \le n - 1 } $ such that
+\begin{equation}
+f - g = \sume{i}{0}{ n - 1 }{ c_i L_i }.
+\end{equation}
+Therefore,
+\begin{equation}
+\begin{split}
+\norm{f}^2 &= \norm{ g + \sume{i}{0}{ n - 1 }{ c_i L_i }}^2 \\
+&= \norm{g}^2 + \sume{i}{0}{ n - 1 }{ c_i^2 \norm{L_i}^2 }
+\end{split}
+\end{equation}
+where the last equality follows from the orthogonality of $L_i$. Because $ \norm{L_i}^2 > 0 $, we have $ \norm{f} \ge \norm{g} $, and the equality is reached iff $ c_i = 0 \crbr{ 0 \le i \le n - 1 } $, which is equivalent to $ f = g $. Consequently,
+\begin{gather}
+g = \argmin_{ f \mtx{monic}, \deg f = n } \norm{f}, \\
+\norm{g} = \min_{ f \mtx{monic}, \deg f = n } \norm{f}.
+\end{gather}
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmanswer}
+\ 
+\begin{thmquestion}
+Suppose the best uniform approximation is $ g \rbr{x} = a x + b $, and therefore there exists a Chebyshev alternance of $3$ points for the $ R \rbr{x} = \sin \frac{ \spi x }{2} - a x - b $. Becuase $R$ is concave over $ \rbr{ 0, 1 } $, therefore two of the points are $ 0, 1 $ respectively. Because $ R \rbr{0} = R \rbr{1} $, it follows that $ a = 1 $ and consequently the third point is
+\begin{equation}
+\xi = \frac{2}{\spi} \arccos \frac{2}{\spi}.
+\end{equation}
+From $ R \rbr{0} = -R \rbr{\xi} $, we derive that
+\begin{equation}
+b = \frac{1}{2} \sin \arccos \frac{2}{\spi} - \frac{1}{\spi} \arccos \frac{2}{\spi} =  \frac{\sqrt{ \spi^2 - 4 }}{ 2 \spi } - \frac{1}{\spi} \arccos \frac{2}{\spi}
+\end{equation}
+and
+\begin{equation}
+g \rbr{x} = x + \frac{\sqrt{ \spi^2 - 4 }}{ 2 \spi } - \frac{1}{\spi} \arccos \frac{2}{\spi}.
+\end{equation}
+\end{thmquestion}
+\end{thmanswer}
+
+\begin{thmanswer}
+\ 
+\begin{thmquestion}
+Let $T_n$ be the Chebyshev polynomial of degree $n$, $ r_n = \frac{1}{2^{ n - 1 }} T_n $ and $ f_n = x^n - r_n $. Because $r_n$ is monic, therefore $ f_n \in \mathcal{P}_{ n - 1 } $.
+
+Note that $ r_n = x^n - f_n $ have a Chebyshev alternance of $ n + 1 $ points: let
+\begin{equation}
+x_k = \cos \frac{ k \spi }{ 2 n }, \crbr{ 0 \le k \le n },
+\end{equation}
+and then
+\begin{partlist}
+\item $x_k$ are $ n + 1 $ distinct points arranged from right to left on the axis;
+\item
+\begin{equation}
+r_n \rbr{x_k} = \frac{1}{2^{ n - 1 }} T_n \rbr{x_k} = \frac{1}{2^{ n - 1 }} \rbr{-1}^k;
+\end{equation}
+\item $ \abs{ r_n \rbr{x} } \le \frac{1}{2^{ n - 1 }} $; \label{Item:NormBound}
+\item the equality in \ref{Item:NormBound} is only reached at $x_k$.
+\end{partlist}
+Because $ f_n \in \mathcal{P}_{ n - 1 } $, therefore $f_n$ is the best uniform approximation of $x^n$.
+
+In conclusion, $ f_n = x^n - \frac{1}{2^{ n - 1 }} T_n $ is the best uniform approximation of $x^n$, and the Chebyshev alternance consists of $ x_k = \cos \frac{ k \spi }{ 2 n } \crbr{ 0 \le k \le n } $.
+\end{thmquestion}
+\end{thmanswer}
+
+\begin{thmquestion}
+\
+\begin{thmproof}
+Consider
+\begin{equation}
+u_i = \msbr{ \phi_i \rbr{x_1} & \phi_i \rbr{x_2} & \phi_i \rbr{x_3} & \cdots & \phi_i \rbr{x_{ i + 1 }} }^{\rmut}
+\end{equation}
+and the matrix
+\begin{equation}
+M = \msbr{ u_i & u_1 & u_2 & u_3 & \cdots & u_i }.
+\end{equation}
+Because $M$ is linear dependent in terms of columns, we have
+\begin{align}
+0 &= \det M \\
+&= \sume{j}{1}{n}{ \rbr{-1}^{ j + 1 } \phi_i \rbr{x_j} \rbr{x_j} D_j } \\
+&= -\sume{j}{1}{n}{ \phi_i \rbr{x_j} \sigma_j }.
+\end{align}
+Therefore,
+\begin{equation}
+\sume{j}{1}{n}{ \phi_i \rbr{x_j} \sigma_j } = 0
+\end{equation}
+follows as desired.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmanswer}
+The Python code is placed in the file \verb"Problem8.ipynb". The algorithm succeeded in converging in the $ k = 2 $nd iteration, such that
+\begin{equation}
+\maxe{j}{1}{ n + 1 }{\abs{\epsilon^{\rbr{k}}_j}} - \mine{j}{1}{ n + 1 }{\abs{\epsilon^{\rbr{k}}_j}} = \text{8.720947e-06} < \text{1e-4}.
+\end{equation}
+\end{thmanswer}
+Plot of $f$ and $p_{\cdot}$ is shown in Figure \ref{Fig:Origin}, and plot of residue is shown in Figure \ref{Fig:Residue}.
+\begin{figure}[htbp]
+\centering \scalebox{0.8}{\input{Figure01.pgf}}
+\caption{Graph of $f$ and $p_{\cdot}$} \label{Fig:Origin}
+\end{figure}
+\begin{figure}[htbp]
+\centering \scalebox{0.8}{\input{Figure02.pgf}}
+\caption{Graph of $ p_2 - f $} \label{Fig:Residue}
+\end{figure}
+The final polynomial is
+\begin{equation}
+\begin{split}
+p_2 \rbr{x} &= - 9.600345 \cdot 10^{-11} x^{5} + 0.603579 x^{4} \\
+&+ 1.136689 \cdot 10^{-10} x^{3} + 0.414182 x^{2} - 1.766548 \cdot 10^{-11} x - 0.008881,
+\end{split}
+\end{equation}
+while the final control points are
+\begin{equation}
+-1.000000, -0.832979, -0.414353, -0.000000, 0.414353, 0.832979, 1.000000.
+\end{equation}
+\end{thmquestion}
+
+\begin{thmquestion}
+\
+\begin{thmproof}
+Consider the space to be continuos function on an interval $ \sbr{ a, b } $ and the inner product to be
+\begin{equation}
+\pbr{ f, g } = \intb{a}{b}{ f \rbr{x} g \rbr{x} \sd x }.
+\end{equation}
+
+Suppose zeros of $p_i$ are $ \xi_1 < \xi_2 < \cdots < \xi_k $ with $ k < i $, and without loss of generality assume $p_i$ are positive, negative, positive, \ldots on $ \rsbr{ \xi_k, b }, \rbr{ \xi_{ k - 1 }, \xi_k }, \cdots, \rbr{ \xi_1, \xi_2 }, \srbr{ a , \xi_1 } $ respectively. Consider
+\begin{equation}
+g = \rbr{ x - \xi_1 } \rbr{ x - \xi_2 } \cdots \rbr{ x - \xi_k }.
+\end{equation}
+Because $ p_i g \ge 0 $, and $ p_i g $ have some strictly positive points, therefore
+\begin{equation}
+\pbr{ p_i, g } = \intb{a}{b}{ p_i \rbr{x} g \rbr{x} \sd x } > 0.
+\end{equation}
+However, because $ \deg g = k < i $, therefore $ g \in \opspan \cbr{ p_0, p_1, \cdots, p_{ i - 1 } } $ and $ \pbr{ p_i, g } = 0 $, which leads to contradiction. Consequently, $p_i$ has at least $i$ zeros. Because $p_i$ is a polynomial of degree $i$, $p_i$ has exactly $i$ zeros in $ \sbr{ a, b } $.
+\end{thmproof}
+\end{thmquestion}
+
+\end{document}
