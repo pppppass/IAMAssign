@@ -7,8 +7,10 @@
 *.thm
 *.run.xml
 *.synctex.gz
+Temporary/
+__pycache__/
+.ipynb_checkpoints/
 
 # Binary files
 *.pdf
-__pycache__/
-.ipynb_checkpoints/
+*.png

@@ -1,3 +1,6 @@
 [submodule "TeXTemplate"]
 	path = TeXTemplate
 	url = git@github.com:pppppass/TeXTemplate
+[submodule "exputils"]
+	path = exputils
+	url = git@github.com:pppppass/exputils
