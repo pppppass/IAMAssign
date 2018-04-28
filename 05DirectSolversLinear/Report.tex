@@ -1,0 +1,159 @@
+% !TeX encoding = UTF-8
+% !TeX program = LuaLaTeX
+% !TeX spellcheck = en_US
+
+% Author : Zhihan Li
+% Description : Report for Lecture 5 --- Direct Solvers to Linear Systems
+
+\documentclass[english, nochinese]{../textmpls/pkupaper}
+
+\usepackage[paper, cmrgreekup]{../textmpls/def}
+
+\newcommand{\cuniversity}{Peking University}
+\newcommand{\cthesisname}{Introduction to Applied Mathematics}
+\newcommand{\titlemark}{Assignment for Lecture 5}
+
+\DeclareRobustCommand{\authoring}%
+{%
+\begin{tabular}{c}%
+Zhihan Li \\%
+1600010653%
+\end{tabular}%
+}
+
+\title{\titlemark}
+\author{\authoring}
+\begin{document}
+
+\maketitle
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Because the first row of $A$ and $A^{\rbr{1}}$ are identical, therefore
+\begin{equation}
+\abs{A^{\rbr{1}}_{11}} \ge \sume{k}{2}{n}{\abs{A^{\rbr{1}}_{1k}}}
+\end{equation}
+can be established.
+
+For $ u = 2, 3, \cdots, n $, we have
+\begin{equation}
+A^{\rbr{1}}_{ u k } = A_{ u k } - \frac{ A_{ u 1 } A_{ 1 k } }{A_{ 1 1 }}
+\end{equation}
+with $ A^{\rbr{1}}_{ u 1 } = 0 $. Because
+\begin{equation}
+\begin{split}
+\abs{A^{\rbr{1}}_{ u u }} &= \abs{ A_{ u u } - \frac{ A_{ u 1 } A_{ 1 u } }{A_{ 1 1 }} } \ge \abs{ A_{ u u } } - \abs{\frac{ A_{ u 1 } A_{ 1 u } }{A_{ 1 1 }}} \\
+&\ge \sumb{\sarr{c}{ k = 1 \\ k \neq u }}{n}{\abs{A_{ u k }}} + \sumb{\sarr{c}{ k = 2 \\ k \neq u }}{n}{\abs{\frac{ A_{ u 1 } A_{ 1 k } }{A_{ 1 1 }}}} - \abs{A_{ u 1 }} \\
+&= \sumb{\sarr{c}{ k = 2 \\ k \neq u }}{n}{\rbr{ \abs{A_{ u k }} + \abs{\frac{ A_{ u 1 } A_{ 1 k } }{A_{ 1 1 }}} }} \ge \sumb{\sarr{c}{ k = 2 \\ k \neq u }}{n}{ \abs{ A_{ u k } - \frac{ A_{ u 1 } A_{ 1 k } }{A_{ 1 1 }} } } \\
+&= \sumb{\sarr{c}{ k = 1 \\ k \neq u }}{n}{\abs{A^{\rbr{1}}_{ u k }}}.
+\end{split}
+\end{equation}
+
+From the argument above, we can conclude that $A^{\rbr{1}}$ is diagonally dominant.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmanswer}
+The results are shown in Table \ref{Tbl:Gauss}.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+$n$ & $ \norm{ x^{\ast} - x }_2 $ & $ \norm{ x^{\ast} - x }_{\infty} $ \\
+\hline
+2 & 2.22045e-16 & 2.22045e-16 \\
+\hline
+12 & 1.53738e-13 & 1.13687e-13 \\
+\hline
+24 & 6.29651e-10 & 4.65633e-10 \\
+\hline
+48 & 1.05638e-02 & 7.81202e-03 \\
+\hline
+84 & 7.25938e+08 & 5.36838e+08 \\
+\hline
+\end{tabular}
+\caption{Errors between $x^{\ast}$ and $x$ for different $n$ using Gaussian elimination}
+\label{Tbl:Gauss}
+\end{table}
+Source codes are given in \verb"Problem2.ipynb".
+
+It can be seen that the error goes large for increasing $n$.
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+From properties of Gaussian elimination with full pivoting, the $i$-th row of $U$ is identical to that of
+\begin{equation}
+L_i P_i \cdots L_1 P_1 A Q_1 \cdots Q_i.
+\end{equation}
+Therefore, followed by properties of Gaussian transform, it is also identical to
+\begin{equation}
+P_i \cdots L_1 P_1 A Q_1 \cdots Q_i =: \widetilde{U}^{\rbr{i}}.
+\end{equation}
+Because $P_i$ and $Q_i$ swap the element of maximum absolute value to the $ \rbr{ i, i } $ entry, therefore
+\begin{equation}
+\abs{\widetilde{U}^{\rbr{i}}_{ i i }} \ge \abs{\widetilde{U}^{\rbr{i}}_{ i j }}
+\end{equation}
+for $ j > i $ and consequently
+\begin{equation}
+\abs{U_{ i i }} \ge \abs{U_{ i j }}.
+\end{equation}
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+From the definition of Gaussian elimination, there exists lower triangular $ k \times k $ matrix $ L_{ 1 1 } $ and $ \rbr{ n - k } \times k $ matrix such that
+\begin{equation}
+\msbr{ L_{ 1 1 } & \\ L_{ 2 1 } & I } \msbr{ A_{ 1 1 } & A_{ 1 2 } \\ A_{ 2 1 } & A_{ 2 2 } } = \msbr{ A^{\rbr{k}}_{ 1 1 } & A^{\rbr{k}}_{ 1 2 } \\ & A^{\rbr{k}}_{ 2 2 } }.
+\end{equation}
+Consequently,
+\begin{gather}
+L_{ 2 1 } A_{ 1 1 } + A_{ 2 1 } = 0, \\
+L_{ 2 1 } A_{ 1 2 } + A_{ 2 2 } = A^{\rbr{k}}_{ 2 2 },
+\end{gather}
+which means (note that $ A_{ 1 1 } $ is invertible because Gaussian elimination can be conducted)
+\begin{gather}
+L_{ 2 1 } = -A_{ 2 1 } A_{ 1 1 }^{-1},
+A^{\rbr{k}}_{ 2 2 } = A_{ 2 2 } - A_{ 2 1 } A_{ 1 1 }^{-1} A_{ 1 2 }
+\end{gather}
+as desired.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Suppose there exists upper triangular matrices $U_1$, $U_2$ and lower triangular matrices with diagonal $1$ $L_1$, $L_2$ such that
+\begin{equation}
+A = L_1 U_1 = L_2 U_2.
+\end{equation}
+Because principle submatrices of $A$ are non-vanishing, diagonal entries of $U_1$ and $U_2$ are all non-zero.
+Therefore
+\begin{equation}
+L_2^{-1} L_1 = U_2 U_1^{-1},
+\end{equation}
+where $ L_2^{-1} L_1 $ are lower triangular matrices with diagonal $1$ and $ U_2 U_1^{-1} $ are upper triangular matrices. Comparing matrix shape of two sides, we have
+\begin{equation}
+L_2^{-1} L_1 = U_2 U_1^{-1} = I,
+\end{equation}
+which means exactly $ L_1 = L_2 $, $ U_1 = U_2 $, the uniqueness.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\end{document}
