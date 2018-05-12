@@ -1,0 +1,162 @@
+% !TeX encoding = UTF-8
+% !TeX program = LuaLaTeX
+% !TeX spellcheck = en_US
+
+% Author : Zhihan Li
+% Description : Report for Lecture 6 --- Iterative Solvers to Linear Systems
+
+\documentclass[english, nochinese]{../textmpls/pkupaper}
+
+\usepackage[paper, cmrgreekup]{../textmpls/def}
+
+\newcommand{\cuniversity}{Peking University}
+\newcommand{\cthesisname}{Introduction to Applied Mathematics}
+\newcommand{\titlemark}{Assignment for Lecture 6}
+
+\DeclareRobustCommand{\authoring}%
+{%
+\begin{tabular}{c}%
+Zhihan Li \\%
+1600010653%
+\end{tabular}%
+}
+
+\title{\titlemark}
+\author{\authoring}
+\begin{document}
+
+\maketitle
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Consider
+\begin{gather}
+\widehat{x} = x / \norm{x}_p, \\
+\widehat{y} = y / \norm{y}_q,
+\end{gather}
+which satisfies $ \norm{\widehat{x}}_p = 1 $, $ \norm{\widehat{y}}_q = 1 $. Because of the Young's inequality, we have
+\begin{equation}
+\abs{ \widehat{x}^{\rmut} \widehat{y} } \le \sume{i}{1}{n}{ \abs{ \widehat{x}_i \widehat{y}_i } } \le \frac{1}{p} \sume{i}{1}{n}{\abs{\widehat{x}_i}^p} + \frac{1}{q} \sume{i}{1}{n}{\abs{\widehat{y}_i}^q} = \frac{1}{p} \norm{\widehat{x}}_p + \frac{1}{q} \norm{\widehat{y}}_q = \frac{1}{p} + \frac{1}{q} = 1,
+\end{equation}
+which consequently gives
+\begin{equation}
+\abs{ x^{\rmut} y } = \abs{ \widehat{x}^{\rmut} \widehat{y} } \norm{x}_p \norm{y}_q \le \norm{x}_p \norm{y}_q.
+\end{equation}
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+\begin{partlist}
+\item Positive definiteness: because $ \norm{ A x } \ge 0 $ for all $x$, therefore $ \norm{A} = \max_{ \norm{x} = 1 } \norm{ A x } \ge 0 $. If $ \norm{A} = 0 $, then for all $ x \neq 0 $, $ \norm{ A x } = \norm{ A \rbr{ x / \norm{x} } } \norm{x} = 0 $ and $ A x = 0 $, which means $ A = 0 $.
+\item Absolute homogeneity:
+\begin{equation}
+\norm{ a A } = \max_{ \norm{x} = 1 } \norm{ a A x } = \abs{a} \max_{ \norm{x} = 1 } \norm{ A x } = \abs{a} \norm{A}.
+\end{equation}
+\item Triangle inequality:
+\begin{equation}
+\norm{A} + \norm{B} = \max_{ \norm{x} = 1 } \norm{ A x } + \max_{ \norm{x} = 1 } \norm{ B x } \ge \max_{ \norm{x} = 1 } \rbr{ \norm{ A x } + \norm{ B x } } \ge \max_{ \norm{x} = 1 } \norm{ \rbr{ A + B } x } = \norm{ A + B }.
+\end{equation}
+\end{partlist}
+
+Combining these condition, $ \norm{\cdot} : A \mapsto \norm{A} $ is indeed a norm.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Choose some $x$ such that $ \norm{x} \neq 0 $. Because $A$ is invertible,
+\begin{equation}
+\kappa \rbr{A} \norm{x} = \norm{A} \norm{A^{-1}} \norm{x} \ge \norm{A} \norm{ A^{-1} x } \ge \norm{ A A^{-1} x } \ge \norm{x},
+\end{equation}
+which means
+\begin{equation}
+\kappa \rbr{A} \ge 1.
+\end{equation}
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmanswer}
+Analytical solution of the equation is
+\begin{equation}
+x^{\ast} = \frac{1}{ \rbr{ 3 + \epsilon } \rbr{ 1 + \epsilon } } \msbr{ -4 - \epsilon \\ -1 - \epsilon \\ 5 + 2 \epsilon }.
+\end{equation}
+
+The result is shown in Table \ref{Tbl:GSIt}.
+
+\begin{table}[htbp]
+\caption{Number of Gauss-Seidel iterations for different $\epsilon$} \label{Tbl:GSIt}
+\centering
+\begin{tabular}{|c|c|}
+\hline
+$\epsilon$ & iterations \\
+\hline
+1.0e+00 & 11 \\
+\hline
+1.0e-01 & 77 \\
+\hline
+1.0e-02 & 730 \\
+\hline
+1.0e-03 & 7262 \\
+\hline
+1.0e-04 & 72581 \\
+\hline
+1.0e-05 & 725774 \\
+\hline
+1.0e-06 & 7257699 \\
+\hline
+1.0e-07 & 72577097 \\
+\hline
+\end{tabular}
+\end{table}
+
+Source codes are given in Python in \verb"Problem4.ipynb".
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+It suffices to prove that $ \rho \rbr{H} < 1 $. If $\lambda$ is an eigenvalue of $H$ and $v$ is the corresponding eigenvector, then (note that $H$ is real)
+\begin{equation}
+0 < v^{\ast} B v = v^{\ast} P v - v^{\ast} H^{\ast} P H v = \rbr{ 1 - \abs{\lambda}^2 } v^{\ast} P v.
+\end{equation}
+Because $ v^{\ast} P v^{\ast} > 0 $ also holds, therefore $ 1 - \abs{\lambda}^2 > 0 $, which implies that $ \abs{\lambda} < 1 $ and $ \rho \rbr{H} < 1 $.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Proof by contradiction. That $A$ is singular leads to the existence of non-zero $v$ such that $ A v = 0 $.
+
+Consider the case that $A$ is diagonally dominant. Suppose $ \abs{v_i} = \maxe{j}{1}{n}{\abs{v_j}} $ (which is grater than zero according to the hypothesis), and therefore
+\begin{equation}
+0 = \abs{\rbr{ A v }_i} = \abs{\sume{j}{1}{n}{ A_{ i j } v_j }} \ge \abs{A_{ i i }} \abs{v_i} - \sumb{\sarr{c}{ j = 1 \\ j \neq i }}{n}{ \abs{A_{ i j }} \abs{v_j} } \ge \rbr{ \abs{A_{ i i }} - \sumb{\sarr{c}{ j = 1 \\ j \neq i }}{n}{\abs{A_{ i j }}} } \abs{v_i} > 0,
+\end{equation}
+which leads to contradiction.
+
+Consider the case that $A$ is irreducibly diagonally dominant. Let $ S = \cbr{ i : \abs{v_i} = \maxe{j}{1}{n}{\abs{v_j}} } $ and $ T = \cbr{ 1, 2, \cdots, n } \setminus S $. Because $A$ is irreducible, therefore there exists $ s \in S $, $ t \in T $ such that $ A_{ s t } \neq 0 $. Consequently,
+\begin{equation}
+0 = \abs{\rbr{ A v }_s} = \abs{\sume{j}{1}{n}{ A_{ s j } v_j }} \ge \abs{A_{ s s }} \abs{v_s} - \sumb{\sarr{c}{ j = 1 \\ j \neq s }}{n}{ \abs{A_{ s j }} \abs{v_j} } > \rbr{ \abs{A_{ s s }} - \sumb{\sarr{c}{ j = 1 \\ j \neq s }}{n}{\abs{A_{ s j }}} } \abs{v_s} \ge 0,
+\end{equation}
+which also leads to contradiction.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\end{document}
