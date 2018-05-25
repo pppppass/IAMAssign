@@ -1,0 +1,86 @@
+% !TeX encoding = UTF-8
+% !TeX program = LuaLaTeX
+% !TeX spellcheck = en_US
+
+% Author : Zhihan Li
+% Description : Report for Lecture 8 --- Nonlinear Systems
+
+\documentclass[english, nochinese]{../textmpls/pkupaper}
+
+\usepackage[paper]{../textmpls/def}
+
+\newcommand{\cuniversity}{Peking University}
+\newcommand{\cthesisname}{Introduction to Applied Mathematics}
+\newcommand{\titlemark}{Assignment for Lecture 8}
+
+\DeclareRobustCommand{\authoring}%
+{%
+\begin{tabular}{c}%
+Zhihan Li \\%
+1600010653%
+\end{tabular}%
+}
+
+\title{\titlemark}
+\author{\authoring}
+\begin{document}
+
+\maketitle
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Let $ e_n = x_n - x^{\star} $. Because
+\begin{equation}
+\begin{split}
+e_{ n + 1 } &= e_n - \frac{ k f \rbr{x_n} }{ f' \rbr{x_n} } = e_n - \frac{ k \frac{1}{ k ! } e_n^k f^{\rbr{k}} \rbr{x^{\star}} + k \frac{1}{ \rbr{ k + 1 } ! } e_n^{ k + 1 } f^{\rbr{ k + 1 }} \rbr{\xi_1} }{ \frac{1}{ \rbr{ k - 1 } ! } e_n^{ k - 1 } f^{\rbr{k}} \rbr{x^{\star}} + \frac{1}{ k ! } e_n^k f^{\rbr{ k + 1 }} \rbr{\xi_2} } \\
+&= e_n^2 \frac{ \frac{1}{ k + 1 } f^{\rbr{ k + 1 }} \rbr{\xi_1} }{ f^{\rbr{k}} \rbr{x^{\star}} + \frac{1}{k} e_n f^{\rbr{ k + 1 }} \rbr{\xi_2} },
+\end{split}
+\end{equation}
+where $ \xi_1, \xi_2 \in \rbr{ x^{\star}, x_n } $ (or $ \rbr{ x_n, x^{\star} }$). Because $ f^{\rbr{k}} \rbr{x^{\star}} \neq 0 $, therefore when $x$ lies in a neighborhood of $x^{\star}$, the coefficient
+\begin{equation}
+C = \frac{ \frac{1}{ k + 1 } f^{\rbr{ k + 1 }} \rbr{\xi_1} }{ f^{\rbr{k}} \rbr{x^{\star}} + \frac{1}{k} e_n f^{\rbr{ k + 1 }} \rbr{\xi_2} }
+\end{equation}
+is bounded, and hence second order convergence is derived.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Let $ e_n = x_n - x^{\star} $.
+
+Suppose $ f' \rbr{x^{\star}} \neq 0 $. Note that
+\begin{equation}
+\begin{split}
+g \rbr{x_n} &= \frac{ f \rbr{ x_n + f \rbr{x_n} } - f \rbr{x_n} }{ f \rbr{x_n} } = \frac{ f \rbr{x_n} f' \rbr{x_n} + \frac{1}{2} f^2 \rbr{x_n} f'' \rbr{\xi_1} }{ f \rbr{x_n} } \\
+&= f' \rbr{x_n} + \frac{1}{2} f \rbr{x_n} f'' \rbr{\xi_1}.
+\end{split}
+\end{equation}
+Because
+\begin{equation}
+e_{ n + 1 } = e_n - \frac{ f \rbr{x_n} }{ g \rbr{x_n} } = \frac{ e_n g \rbr{x_n} - f \rbr{x_n} }{ g \rbr{x_n} } = \frac{ e_n f' \rbr{x_n} + \frac{1}{2} e_n f \rbr{x_n} f'' \rbr{\xi_1} - f \rbr{x_n} }{ g \rbr{x_n} }.
+\end{equation}
+supposing
+\begin{gather}
+0 = f \rbr{x^{\star}} = f \rbr{x_n} - e_n f' \rbr{x_n} + \frac{1}{2} e_n^2 f'' \rbr{\xi_2} \\
+f \rbr{x_n} = f \rbr{x^{\star}} + e_n f' \rbr{\xi_3} = e_n f' \rbr{\xi_3},
+\end{gather}
+yields
+\begin{equation}
+e_{ n + 1 } = e_n^2 \frac{ \frac{1}{2} f'' \rbr{\xi_2} + \frac{1}{2} f' \rbr{\xi_3} f'' \rbr{\xi_1} }{ g \rbr{x_n} }.
+\end{equation}
+Note that $ f' \rbr{x^{\star}} \neq 0 $ implies $ \abs{ g \rbr{x_n} } > A > 0 $ if $x_n$ lies in a neighborhood of $x^{\star}$, therefore the coefficient of $e_n^2$ is bounded and second order convergence is shown.
+
+Second order convergence cannot be proved if $ f' \rbr{x^{\star}} = 0 $. A counter example is $ f \rbr{x} = x^2 $ and
+\begin{equation}
+x_{ n + 1 } = x_n - \frac{x_n^4}{ \rbr{ x_n + x_n^2 }^2 - x_n^2 } = x_n \frac{ 1 - x_n }{ 2 + x_n }.
+\end{equation}
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\end{document}

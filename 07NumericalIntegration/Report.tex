@@ -1,0 +1,217 @@
+% !TeX encoding = UTF-8
+% !TeX program = LuaLaTeX
+% !TeX spellcheck = en_US
+
+% Author : Zhihan Li
+% Description : Report for Lecture 7 --- Numerical Integrals
+
+\documentclass[english, nochinese]{../textmpls/pkupaper}
+
+\usepackage[paper]{../textmpls/def}
+
+\newcommand{\cuniversity}{Peking University}
+\newcommand{\cthesisname}{Introduction to Applied Mathematics}
+\newcommand{\titlemark}{Assignment for Lecture 7}
+
+\DeclareRobustCommand{\authoring}%
+{%
+\begin{tabular}{c}%
+Zhihan Li \\%
+1600010653%
+\end{tabular}%
+}
+
+\title{\titlemark}
+\author{\authoring}
+\begin{document}
+
+\maketitle
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Suppose $ f \in C^4 \sbr{ a, b } $.
+
+Assume $a$ and $b$ to be $-1$ and $1$ respectively, and it remains to prove the existence of $ \xi \in \sbr{ -1, 1 } $ such that
+\begin{equation}
+\intb{-1}{1}{ f \rbr{x} \sd x } - \frac{1}{3} \rbr{ f \rbr{-1} + 4 f \rbr{0} + f \rbr{1} } = - \frac{1}{90} f^{\rbr{4}} \rbr{\xi}.
+\end{equation}
+
+Consider
+\begin{equation}
+\begin{split}
+P \rbr{x} &= \frac{1}{2} f \rbr{-1} x \rbr{ x - 1 } - f \rbr{0} \rbr{ x + 1 } \rbr{ x - 1 } + \frac{1}{2} f \rbr{1} \rbr{ x + 1 } x \\
+&+ \rbr{ -\frac{1}{2} f \rbr{-1} - \frac{1}{2} f \rbr{1} - f^{\rbr{1}} \rbr{0} } \rbr{ x + 1 } x \rbr{ x - 1 }.
+\end{split}
+\end{equation}
+and $ d \rbr{x} := f \rbr{x} - P \rbr{x} $. It can be verified that $d$ satisfies $ d \rbr{-1} = d \rbr{0} = d \rbr{1} = d' \rbr{0} = 0 $. For $ x \in \rbr{ -1, 0 } \cup \rbr{ 0, 1 } $, there exists (proof postponed) $ \xi_x \in \sbr{ -1, 1 } $, such that
+\begin{equation}
+f \rbr{x} - P \rbr{x} = \frac{1}{24} x^2 \rbr{ x - 1 } \rbr{ x + 1 } f^{\rbr{4}} \rbr{\xi_x}.
+\end{equation}
+Therefore from continuity of $ f^{\rbr{4}} $ there exists $\xi_3$, such that
+\begin{equation}
+\begin{split}
+&\ptrel{=} \intb{-1}{1}{ f \rbr{x} \sd x } - \frac{1}{3} \rbr{ f \rbr{-1} + 4 f \rbr{0} + f \rbr{1} } \\
+&= \intb{-1}{1}{ f \rbr{x} \sd x } - \intb{-1}{1}{ P \rbr{x} \sd x } \\
+&= \intb{-1}{1}{ \frac{1}{24} x^2 \rbr{ x - 1 } \rbr{ x + 1 } f^{\rbr{4}} \rbr{\xi_x} \sd x } \\
+&= \frac{1}{24} \intb{-1}{1}{ x^2 \rbr{ x - 1 } \rbr{ x + 1 } \sd x } f^{\rbr{4}} \rbr{\xi} \\
+&= -\frac{1}{90} f^{\rbr{4}} \rbr{\xi}
+\end{split}
+\end{equation}
+as desired.
+
+Existence of $\xi_x$: Without loss of generality, assume $ x \in \rbr{ 0, 1 } $. Consider
+\begin{equation}
+Q \rbr{y} = f \rbr{y} - P \rbr{y} - \frac{ f \rbr{x} - P \rbr{x} }{ x^2 \rbr{ x - 1 } \rbr{ x + 1 } } y^2 \rbr{ y - 1 } \rbr{ y + 1 },
+\end{equation}
+which satisfies $ Q \rbr{-1} = Q \rbr{0} = Q \rbr{1} = Q' \rbr{0} = Q \rbr{x} = 0 $. Applying Rolle's mean value theorem, there exists $ \xi_x \in \sbr{ -1, 1 } $ such that $ Q^{\rbr{4}} \rbr{\xi_x} = 0 $, which is equivalent to
+\begin{equation}
+f \rbr{x} - P \rbr{x} = \frac{1}{24} f^{\rbr{4}} \rbr{\xi} x^2 \rbr{ x - 1 } \rbr{ x + 1 }.
+\end{equation}
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Let the (equally spaced) interpolation nodes be $ x_0 = a, x_1, \cdots, x_n = b $ respectively,
+\begin{equation}
+\phi_k \rbr{x} = \prodb{\sarr{c}{ j = 0 \\ j \neq k }}{n}{\frac{ x - x_j }{ x_k - x_j }},
+\end{equation}
+and
+\begin{equation}
+P_n \rbr{x} = \sume{k}{0}{n}{ f \rbr{x_k} \phi_k \rbr{x} }
+\end{equation}
+and therefore the Newton-Cotes formula can be written as
+\begin{equation}
+I = \intb{a}{b}{ P_n \rbr{x} \sd x } = \sume{k}{0}{n}{ f \rbr{x_k} \intb{a}{b}{ \phi_k \rbr{x} \sd x } }.
+\end{equation}
+
+When $ f \rbr{x} = x^n $, Lagrangian interpolation yields $ f = P_n $, and therefore
+\begin{equation}
+I = \intb{a}{b}{ P_n \rbr{x} \sd x } = \intb{a}{b}{ f \rbr{x} \sd x }
+\end{equation}
+exactly.
+
+If $n$ is even, then $ n + 1 $ is odd. It suffices to prove that for the case $ f \rbr{x} = \rbr{ x - \frac{ a + b }{2} }^{ n + 1 } $,
+\begin{equation}
+I = \intb{a}{b}{ P_n \rbr{x} \sd x } = \intb{a}{b}{ f \rbr{x} \sd x } = 0.
+\end{equation}
+Note that $ \phi_k \rbr{x} = \phi_{ n - k } \rbr{ a + b - x } $ follows from definition, and therefore
+\begin{equation}
+\begin{split}
+2 I &= \sume{k}{0}{n}{ f \rbr{x_k} \rbr{ \intb{a}{b}{ \phi_k \rbr{x} \sd x } + \intb{a}{b}{ \phi_{ n - k } \rbr{ a + b - k } \sd x } } } \\
+&= \sume{k}{0}{n}{ \rbr{ f \rbr{x_k} + f \rbr{x_{ n - k }} } \intb{a}{b}{ \phi_k \rbr{x} \sd x } } = 0
+\end{split}
+\end{equation}
+as desired.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmanswer}
+The result is shown in table \ref{Tbl:Res}. Error corresponds to $ \abs{ I - \pi } $ here.
+
+\begin{table}[htbp]
+\centering
+\caption{Errors of different integration methods}
+\label{Tbl:Res}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+$ 1 / h $ & Trapezoid & Simpson & Romberg 3 & Romberg 4 & Romberg 5 & Gauss 2 \\
+\hline
+1 & 1.41593e-01 & 8.25932e-03 & 5.24993e-04 & 6.86983e-06 & 1.16879e-08 & 5.94833e-03 \\
+\hline
+2 & 4.15927e-02 & 2.40261e-05 & 1.44054e-06 & 1.51930e-08 & 5.98170e-11 & 1.72394e-05 \\
+\hline
+3 & 1.85157e-02 & 8.72654e-07 & 4.40069e-08 & 2.38405e-11 & 9.85878e-14 & 6.20794e-07 \\
+\hline
+4 & 1.04162e-02 & 1.51131e-07 & 7.55277e-09 & 2.35811e-13 & 8.88178e-16 & 1.07469e-07 \\
+\hline
+5 & 6.66654e-03 & 3.96506e-08 & 1.98203e-09 & 3.10862e-14 & 0.00000e+00 & 2.81956e-08 \\
+\hline
+8 & 2.60416e-03 & 2.36497e-09 & 1.18244e-10 & 8.88178e-16 & 4.44089e-16 & 1.68175e-09 \\
+\hline
+10 & 1.66666e-03 & 6.20008e-10 & 3.09996e-11 & 4.44089e-16 & 0.00000e+00 & 4.40895e-10 \\
+\hline
+20 & 4.16667e-04 & 9.68825e-12 & 4.84501e-13 & 0.00000e+00 & 4.44089e-16 & 6.88960e-12 \\
+\hline
+30 & 1.85185e-04 & 8.49987e-13 & 4.21885e-14 & 4.44089e-16 & 0.00000e+00 & 6.04850e-13 \\
+\hline
+40 & 1.04167e-04 & 1.51879e-13 & 7.99361e-15 & 0.00000e+00 & 0.00000e+00 & 1.07914e-13 \\
+\hline
+50 & 6.66667e-05 & 3.95239e-14 & 2.22045e-15 & 0.00000e+00 & 0.00000e+00 & 2.84217e-14 \\
+\hline
+\end{tabular}
+\end{table}
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Suppose zeros of $\phi_i$ are $ x_1 < x_2 < \cdots < x_k $ with $ k < i $, and without loss of generality assume $ \phi_i, -\phi_i, \cdots, \rbr{-1}^k \phi_i $ are positive on $ \rsbr{ x_k, b }, \rbr{ x_{ k - 1 }, x_k }, \cdots, \rbr{ x_1, x_2 }, \srbr{ a , x_1 } $ respectively. (We may change the sign of $\phi_i$ by multiplying $-1$, and ignore repeated zeros away if signs do not change around $\phi_i$) Consider
+\begin{equation}
+\psi \rbr{x} = \rbr{ x - x_1 } \rbr{ x - x_2 } \cdots \rbr{ x - x_k }.
+\end{equation}
+Because $ \deg g = k < i $ and consequently
+\begin{equation}
+\psi \in \opspan \pbr{ \phi_0, \phi_1, \cdots, \phi_{ i - 1 } },
+\end{equation}
+therefore
+\begin{equation}
+\intb{a}{b}{ \rho \rbr{x} \phi_i \rbr{x} \psi \rbr{x} \sd x } = 0.
+\end{equation}
+However, this contradicts $ \rho \phi_i \psi $ being continuous and non-negative, with finite points reaching equality.
+
+As a result, $ k \ge i $. Note that $ k > i $ can be ruled out because of the degree constraint, and therefore we can conclude $ k = i $.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Because $L_n$ is $n$-th Legendre polynomial, therefore
+\begin{equation}
+f_i \rbr{x} = \prodb{\sarr{c}{ j = 1 \\ j \neq i }}{n}{\frac{ x - x_j }{ x_i - x_j }}
+\end{equation}
+satisfies $ \deg f_i = 2 n - 2 \le 2 n - 1 $ and the quadrature is exact for $f_i$. Note that the quadrature gives
+\begin{equation}
+\begin{split}
+I &= \sume{k}{1}{n}{ A_k l_i \rbr{x_k}} = \sume{k}{1}{n}{ A_k \delta_{ i k } } = A_i \\
+&= \intb{a}{b}{ f_i \rbr{x} \sd x } > 0
+\end{split}
+\end{equation}
+as desired.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+It suffices to prove the case $ a = 0 $, $ b = 1 $.
+
+Because
+\begin{gather}
+\intb{a}{b}{ 1 \sd x } = 1 = \frac{1}{6} \rbr{ 1 + 4 + 1 }, \\
+\intb{a}{b}{ x \sd x } = \frac{1}{2} = \frac{1}{6} \rbr{ 0 + 4 \cdot \frac{1}{2} + 1 }, \\
+\intb{a}{b}{ x^2 \sd x } = \frac{1}{3} = \frac{1}{6}{ 0 + 4 \cdot \frac{1}{4} + 1 }, \\
+\intb{a}{b}{ x^3 \sd x } = \frac{1}{4} = \frac{1}{6}{ 0 + 4 \cdot \frac{1}{8} + 1 }, \\
+\intb{a}{b}{ x^4 \sd x } = \frac{1}{5} \neq \frac{5}{24} = \frac{1}{6}{ 0 + 4 \cdot \frac{1}{16} + 1 },
+\end{gather}
+therefore the quadrature applies for polynomials of degree no greater than $3$ exactly. That is, algebraic precision of the quadrature is $3$.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\end{document}
