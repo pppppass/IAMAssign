@@ -5,6 +5,8 @@
 *.log
 *.out
 *.thm
+*.bbl
+*.blg
 *.run.xml
 *.synctex.gz
 Temporary/
