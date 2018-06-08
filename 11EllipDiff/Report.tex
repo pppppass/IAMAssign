@@ -1,0 +1,65 @@
+% !TeX encoding = UTF-8
+% !TeX program = LuaLaTeX
+% !TeX spellcheck = en_US
+
+% Author : Zhihan Li
+% Description : Report for Lecture 11
+
+\documentclass[english, nochinese]{pkupaper}
+
+\usepackage[paper]{def}
+
+\newcommand{\cuniversity}{Peking University}
+\newcommand{\cthesisname}{Introduction to Applied Mathematics}
+\newcommand{\titlemark}{Assignment of Report for Lecture 11}
+
+\DeclareRobustCommand{\authoring}%
+{%
+\begin{tabular}{c}%
+Zhihan Li \\%
+1600010653%
+\end{tabular}%
+}
+
+\title{\titlemark}
+\author{\authoring}
+\begin{document}
+
+\maketitle
+
+\begin{thmquestion}
+\ 
+\begin{thmanswer}
+The setting follows the description in the slide. Initial values are set to be
+\begin{equation}
+u^{\rbr{0}} = \msbr{ 0 & \sin \frac{ k \spi }{N}, \sin \frac{ 2 k \spi }{N} & \cdots & \sin \frac{ \rbr{ N - 1 } k \spi }{N} & 0 }^{\rmut},
+\end{equation}
+and only the $ N - 1 $ entries in the middle are updated due to Dirichlet boundary condition. Here we set $ N = 64 $.
+
+Vectors $u^{\rbr{t}}$ after $ t = 5 $ iterations are shown in Figure \ref{Fig:Vec}. The error $\norm{u^{\rbr{t}}}_{\infty}$ is shown in Figure \ref{Fig:Err}.
+
+\begin{figure}[htbp]
+{
+\centering
+\scalebox{0.8}{\input{Figures/Figure02.pgf}}
+\caption{Vectors after $ t = 5 $ iterations}
+\label{Fig:Vec}
+}
+{
+\footnotesize
+The original vectors are shown in straight lines, and vectors after $ t = 5 $ iterations are shown in dashed lines.
+}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\scalebox{0.8}{\input{Figures/Figure01.pgf}}
+\caption{Errors with respect to iterations $t$}
+\label{Fig:Err}
+\end{figure}
+
+The codes are implemented in Python and stored in \verb"Problem1.ipynb".
+\end{thmanswer}
+\end{thmquestion}
+
+\end{document}

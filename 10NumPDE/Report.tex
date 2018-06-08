@@ -1,0 +1,117 @@
+% !TeX encoding = UTF-8
+% !TeX program = LuaLaTeX
+% !TeX spellcheck = en_US
+
+% Author : Zhihan Li
+% Description : Report for Lecture 10
+
+\documentclass[english, nochinese]{pkupaper}
+
+\usepackage[paper]{def}
+
+\newcommand{\cuniversity}{Peking University}
+\newcommand{\cthesisname}{Introduction to Applied Mathematics}
+\newcommand{\titlemark}{Assignment for Lecture 10}
+
+\DeclareRobustCommand{\authoring}%
+{%
+\begin{tabular}{c}%
+Zhihan Li \\%
+1600010653%
+\end{tabular}%
+}
+
+\title{\titlemark}
+\author{\authoring}
+\begin{document}
+
+\maketitle
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Consider the $ \rbr{ J - 1 } \times \rbr{ J - 1 } $-matrix
+\begin{equation} \label{Eq:Lap}
+A = \msbr{ 2 & -1 & 0 & \cdots & 0 & 0 \\ -1 & 2 & -1 & \cdots & 0 & 0 \\ 0 & -1 & 2 & \cdots & 0 & 0 \\ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & 0 & \cdots & 2 & -1 \\ 0 & 0 & 0 & \cdots & -1 & 2 },
+\end{equation}
+and
+\begin{equation}
+v_j = \msbr{ \sin \frac{ j \spi }{J} & \sin \frac{ 2 j \spi }{J} & \cdots & \sin \frac{ \rbr{ J - 1 } j \spi }{J} }^{\rmut}
+\end{equation}
+for $ j = 1, 2, \cdots, J - 1 $.
+Note that
+\begin{equation}
+\sin \frac{ 0 j \spi }{J} = \sin \frac{ J j \spi }{J} = 0,
+\end{equation}
+and
+\begin{equation}
+\begin{split}
+&\ptrel{=} 2 \sin \frac{ k j \spi }{J} - \sin \frac{ \rbr{ k + 1 } j \spi }{J} - \sin \frac{ \rbr{ k - 1 } j \spi }{J} \\
+&= 2 \sin \frac{ k j \spi }{J} - 2 \sin \frac{ k j \spi }{J} \cos \frac{ j \spi }{J} \\
+&= 4 \sin \frac{ k j \spi }{J} \sin^2 \frac{ j \spi }{ 2 J }.
+\end{split}
+\end{equation}
+Therefore, we have
+\begin{equation}
+A v_j = 4 \sin^2 \frac{ j \spi }{ 2 J } v_j.
+\end{equation}
+Because $ v_j \neq 0 $ and $ 4 \sin^2 \frac{ j \spi }{ 2 J } $ are distinct, therefore all eigenvalues of the $ \rbr{ J - 1 } \times \rbr{ J - 1 } $-matrix $A$ are $ 4 \sin^2 \frac{ j \spi }{ 2 J } $ for $ j = 1, 2, \cdots, J - 1 $.
+
+As a result, spectrum of
+\begin{equation}
+1 - \lambda A = \msbr{ 1 - 2 \lambda & \lambda & 0 & \cdots & 0 & 0 \\ \lambda & 1 - 2 \lambda & \lambda & \cdots & 0 & 0 \\ 0 & \lambda & 1 - 2 \lambda & \cdots & 0 & 0 \\ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & 0 & \cdots & 1 - 2 \lambda & \lambda \\ 0 & 0 & 0 & \cdots & \lambda & 1 - 2 \lambda }
+\end{equation}
+is exactly $ 1 - 4 \lambda \sin^2 \frac{ j \spi }{ 2 J } $ with $ j = 1, 2, \cdots, J - 1 $.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+It suffices to prove the matrix
+\begin{equation}
+M = \rbr{ 1 + \lambda A }^{-1}
+\end{equation}
+satisfies $ \rho \rbr{M} < 1 $, where $A$ is defined as \eqref{Eq:Lap}. This directly follows from that eigenvalues of $M$ are $ -1 < 0 < 1 / \rbr{ 1 + 4 \lambda \sin^2 \frac{ j \spi }{ 2 J } } < 1 $ for $ j = 1, 2, \cdots, J - 1 $.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Suppose Courant condition
+\begin{equation}
+\abs{ a \rbr{ x, t } } \frac{k}{h} \le 1
+\end{equation}
+is satisfied.
+
+Denote the error at $ \rbr{ j, n } $ by $e_j^n$. Linearity and Courant condition yields
+\begin{equation}
+\begin{cases}
+e_j^{ n + 1 } = \rbr{ 1 - a_j^n \frac{k}{h} } e_j^n + a_j^n \frac{k}{h} e_{ j - 1 }^n, & 0 \le a_j^n \frac{k}{h} \le 1; \\
+e_j^{ n + 1 } = \rbr{ 1 + a_j^n \frac{k}{h} } e_j^n - a_j^n \frac{k}{h} e_{ j + 1 }^n, & -1 \le a_j^n \frac{k}{h} < 0.
+\end{cases}
+\end{equation}
+Suppose $ \abs{e_j^n} \le M $ for all $j$. Because
+\begin{equation}
+\abs{e_j^{ n + 1 }} \le \rbr{ 1 - a_j^n \frac{k}{h} } \abs{e_j^n} + a_j^n \frac{k}{h} \abs{e_{ j - 1 }^n} \le \rbr{ 1 - a_j^n \frac{k}{h} } M + a_j^n \frac{k}{h} M = M
+\end{equation}
+for $ 0 \le a_j^n \frac{k}{h} \le 1 $, and
+\begin{equation}
+\abs{e_j^{ n + 1 }} \le \rbr{ 1 + a_j^n \frac{k}{h} } \abs{e_j^n} - a_j^n \frac{k}{h} \abs{e_{ j - 1 }^n} \le \rbr{ 1 + a_j^n \frac{k}{h} } M - a_j^n \frac{k}{h} M = M
+\end{equation}
+for $ -1 \le a_j^n \frac{k}{h} < 0 $, we have
+\begin{equation}
+\abs{e_j^{ n + 1 }} \le M.
+\end{equation}
+Applying mathematical induction, this algorithm is numerical stable.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\end{document}
