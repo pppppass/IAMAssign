@@ -1,0 +1,312 @@
+% !TeX encoding = UTF-8
+% !TeX program = LuaLaTeX
+% !TeX spellcheck = en_US
+
+% Author : Zhihan Li
+% Description : Report for Project 2
+
+\documentclass[english, nochinese]{pkupaper}
+
+\usepackage[paper, algorithm, extables]{def}
+
+\newcommand{\cuniversity}{Peking University}
+\newcommand{\cthesisname}{\emph{Introduction to Applied Mathematics}}
+\newcommand{\titlemark}{Report for Project 2}
+
+\DeclareRobustCommand{\authoring}%
+{%
+\begin{tabular}{c}%
+Zhihan Li \\%
+1600010653%
+\end{tabular}%
+}
+
+\title{\titlemark}
+\author{\authoring}
+\date{June 12, 2018}
+
+\begin{document}
+
+\maketitle
+
+\section{Algorithms}
+
+The function given is
+\begin{equation}
+f \rbr{x} = \frac{1}{ 1 + \se^{-x} } - \frac{1}{2} = \frac{1}{2} \tanh \frac{1}{2} x,
+\end{equation}
+and we have
+\begin{equation}
+f' \rbr{x} = \frac{1}{ 4 \cosh^2 \frac{1}{2} x }.
+\end{equation}
+
+The algorithm of Newton method is given in Algorithm \ref{Algo:Newton}.
+
+\begin{algorithm}
+\SetAlgoLined
+
+\KwData{Initial guess $x^{\rbr{0}}$, tolerance $\epsilon$, bound $\omega$}
+
+\BlankLine
+
+$ i \slar 0 $\;
+
+\While{\textbf{True}}
+{
+    \If{$ \abs{ f \rbr{x^{\rbr{i}}} } < \epsilon $}
+    {
+        break\;
+    }
+    \If{$ \abs{x^{\rbr{i}}} > \omega $}
+    {
+        flag the failure\;
+        break\;
+    }
+    $ x^{\rbr{ i + 1 }} = x^{\rbr{i}} - f \rbr{x^{\rbr{i}}} / f' \rbr{x^{\rbr{i}}} $\;
+    $ i \slar i + 1 $\;
+}
+
+\Return{final result $x^{\rbr{i}}$ and the number of iterations $i$}
+
+\BlankLine
+
+\caption{Newton method to find the zero of $f$}
+\label{Algo:Newton}
+\end{algorithm}
+
+To alleviate stability issues of Newton method, we may use continuation methods to approximate initial guesses. The continuation method involves solving the differential equation
+\begin{equation} \label{Eq:Diff}
+\left\{
+\begin{aligned}
+x' \rbr{t} &= -f \rbr{x^{\rbr{0}}} / f' \rbr{ x \rbr{t} }; \\
+x \rbr{0} &= x^{\rbr{0}},
+\end{aligned}
+\right.
+\end{equation}
+where $x^{\rbr{0}}$ is the original initial guess. The modified algorithm is shown in Algorithm \ref{Algo:Cont}.
+
+\begin{algorithm}
+\SetAlgoLined
+
+\KwData{Initial guess $x^{\rbr{0}}$, tolerance $\epsilon$, bound $\omega$}
+
+\BlankLine
+
+solve the continuation differential equation for $ x \rbr{1} $\;
+
+\Return{results from Newton method with initial guess $ x \rbr{1} $, and $\epsilon$, $\omega$}
+
+\BlankLine
+
+\caption{Continuation method to refine the initial guess}
+\label{Algo:Cont}
+\end{algorithm}
+
+There are different algorithms to solve the differential algorithm. Forward Euler method can be directly carried out by Algorithm \ref{Algo:ExpEuler}. Here nodes $ i / n $ are denoted by $t_i$ respectively, and
+\begin{equation}
+\phi \rbr{x} = - f \rbr{x^{\rbr{0}}} / f' \rbr{x}
+\end{equation}
+represents local slopes in \eqref{Eq:Diff}. Additionally, $h$ stands for $ 1 / n $, the step size.
+
+\begin{algorithm}
+\SetAlgoLined
+
+\KwData{Initial value $ x \rbr{0} $, number of intervals $n$}
+
+\BlankLine
+
+\For{$i$ from $0$ to $ n - 1 $}
+{
+    $ x \rbr{t_{ i + 1 }} = x \rbr{t_i} + h \phi \rbr{ x \rbr{t_i} } $\;
+}
+
+\Return{final value $ x \rbr{1} $}
+
+\BlankLine
+
+\caption{Forward Euler method to solve continuation differential equation}
+\label{Algo:ExpEuler}
+\end{algorithm}
+
+We use iterations to perform backward Euler method. This is shown in Algorithm \ref{Algo:ImpEuler}. The algorithm using trapezoid method turns out to be similar and is shown in Algorithm \ref{Algo:Trap}. The only difference is iteration step.
+
+\begin{algorithm}
+\SetAlgoLined
+
+\KwData{Initial value $ x \rbr{0} $, number of intervals $n$, criterion $\mu$}
+
+\BlankLine
+
+\For{$i$ from $0$ to $ n - 1 $}
+{
+    $ k \slar 0 $\;
+    $ x^{\rbr{0}} \rbr{t_{ i + 1 }} \slar x \rbr{t_i} + h \phi \rbr{ x \rbr{t_i} } $\;
+    \While{\textbf{True}}
+    {
+        \tcc{Iterate using backward Euler method}
+        $ x^{\rbr{ k + 1 }} \rbr{t_{ i + 1 }} \slar x \rbr{t_i} + h \phi \rbr{ x^{\rbr{k}} \rbr{t_{ i + 1 }} } $\;
+        \If{$ \abs{ x^{\rbr{ k + 1 }} \rbr{t_{ i + 1 }} - x^{\rbr{k}} \rbr{t_{ i + 1 }} } < \mu $}
+        {
+            break\;
+        }
+        $ k \slar k + 1 $\;
+    }
+    $ x \rbr{t_{ i + 1 }} = x^{\rbr{k}} \rbr{t_{ i + 1 }} $\;
+}
+
+\Return{final value $ x \rbr{1} $}
+
+\BlankLine
+
+\caption{Backward Euler method to solve continuation differential equation}
+\label{Algo:ImpEuler}
+\end{algorithm}
+
+\begin{algorithm}
+\SetAlgoLined
+
+\KwData{Initial value $ x \rbr{0} $, number of intervals $n$, criterion $\mu$}
+
+\BlankLine
+
+\For{$i$ from $0$ to $ n - 1 $}
+{
+    $ k \slar 0 $\;
+    $ x^{\rbr{0}} \rbr{t_{ i + 1 }} \slar x \rbr{t_i} + h \phi \rbr{ x \rbr{t_i} } $\;
+    \While{\textbf{True}}
+    {
+        \tcc{Iterate using trapezoid formula}
+        $ x^{\rbr{ k + 1 }} \rbr{t_{ i + 1 }} \slar x \rbr{t_i} + \frac{1}{2} h \rbr{ \phi \rbr{ x \rbr{t_i} } + \phi \rbr{ x^{\rbr{k}} \rbr{t_{ i + 1 }} } }$\;
+        \If{$ \abs{ x^{\rbr{ k + 1 }} \rbr{t_{ i + 1 }} - x^{\rbr{k}} \rbr{t_{ i + 1 }} } < \mu $}
+        {
+            break\;
+        }
+        $ k \slar k + 1 $\;
+    }
+    $ x \rbr{t_{ i + 1 }} = x^{\rbr{k}} \rbr{t_{ i + 1 }} $\;
+}
+
+\Return{final value $ x \rbr{1} $}
+
+\BlankLine
+
+\caption{Trapezoid method to solve continuation differential equation}
+\label{Algo:Trap}
+\end{algorithm}
+
+Runge-Kutta method of order 4 is also implemented. The is depicted in Algorithm \ref{Algo:RK4}.
+
+\begin{algorithm}
+\SetAlgoLined
+
+\KwData{Initial value $ x \rbr{0} $, number of intervals $n$, criterion $\mu$}
+
+\BlankLine
+
+\For{$i$ from $0$ to $ n - 1 $}
+{
+    $ k \slar 0 $\;
+    $ K_1 \slar \phi \rbr{ x \rbr{t_i} } $\;
+    $ K_2 \slar \phi \rbr{ x \rbr{t_i} + \frac{1}{2} h K_1 } $\;
+    $ K_3 \slar \phi \rbr{ x \rbr{t_i} + \frac{1}{2} h K_2 } $\;
+    $ K_4 \slar \phi \rbr{ x \rbr{t_i} + h K_3 } $\;
+    $ x \rbr{t_{ i + 1 }} \slar x \rbr{t_i} + \frac{1}{6} h \rbr{ K_1 + 2 K_2 + 2 K_3 + K_4 } $\;
+}
+
+\Return{final value $ x \rbr{1} $}
+
+\BlankLine
+
+\caption{Runge-Kutta method of order 4 to solve continuation differential equation}
+\label{Algo:RK4}
+\end{algorithm}
+
+\section{Experiments}
+
+\begin{thmquestion} \label{Ques:Ques1}
+\ 
+\begin{thmanswer}
+When the initial guess is set to be $ x^{\rbr{0}} = \text{-2.17731898} $ with $ \epsilon = \text{1e-3} $, the approximate solution is $ x^{\rbr{i}} = \text{-1.78753444e-04} $, and the number of iterations is $ i = 18 $.
+
+For $ \epsilon = \text{1e-16} $, results of continuation method is shown in Table \ref{Tbl:Res}. In practice, the tolerance $\epsilon$ are all set to be 1e-16. The number of intervals $n$ are set to be $10$, which means the step size $ h = 1 / 10 $. The criterion $\mu$ are selected to be 1e-5 for Algorithm \ref{Algo:ImpEuler} and \ref{Algo:Trap}, which rely on iterations to construct corresponding schemes. 
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmanswer}
+When the initial guess is set to be $ x^{\rbr{0}} = \text{-4} $ with $ \epsilon = \text{1e-3} $, it can be observed that $ x^{\rbr{2}} = \text{-6.51107241e+09} $ and divergence occurs.
+
+For $ \epsilon = \text{1e-16} $, results of continuation method is also shown in Table \ref{Tbl:Res}. Settings of this experiment is identical to that described in Question \ref{Ques:Ques1}.
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{table}[htbp]
+{
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{\multirow{2}*{Algorithms}} & \multicolumn{2}{c|}{$ x^{\rbr{0}} = \text{-2.17731898} $} & \multicolumn{2}{c|}{$ x^{\rbr{0}} = \text{-4} $} \\
+\cline{3-6}
+\multicolumn{2}{|c|}{} & $x^{\rbr{i}}$ & $i$ & $x^{\rbr{i}}$ & $i$ \\
+\hline
+\multicolumn{2}{|c|}{Direct Newton \ref{Algo:Newton}} & 0.00000000e+00 & 20 & -6.51107241e+09\textsuperscript{*} & 2\textsuperscript{*} \\
+\hline
+\multirow{4}*{Continuation \ref{Algo:Cont}} & Forward \ref{Algo:ExpEuler} & 0.00000000e+00 & 3 & 0.00000000e+00 & 4 \\
+\cline{2-6}
+& Backward \ref{Algo:ImpEuler} & -6.31088724e-30 & 3 & 0.00000000e+00 & 3 \\
+\cline{2-6}
+& Trapezoid \ref{Algo:Trap} & 3.30872245e-23 & 2 & 0.00000000e+00 & 3 \\
+\cline{2-6}
+& Runge-Kutta 4 \ref{Algo:RK4} & 0.00000000e+00 & 2 & 1.82959117e-19 & 2 \\
+\hline
+\end{tabular}
+\caption{Numerical results for different algorithms}
+\label{Tbl:Res}
+}
+{
+\footnotesize
+\textsuperscript{*}The algorithm goes divergent.
+}
+\end{table}
+
+We also record the end points $ x \rbr{1} $ of the continuation differential equation calculated by each algorithm. The result is shown in Table \ref{Tbl:End}.
+
+\begin{table}[htbp]
+{
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multirow{2}*{Algorithms} & \multicolumn{2}{c|}{$ x \rbr{0} = \text{-2.17731898} $} & \multicolumn{2}{c|}{$ x \rbr{0} = \text{-4} $} \\
+\cline{2-5}
+& $ x \rbr{1} $ & $ f \rbr{ x \rbr{1} } $ & $ x \rbr{1} $ & $ f \rbr{ x \rbr{1} } $ \\
+\hline
+None\textsuperscript{*} & -2.17731898e+00 & -3.981942e-01 & -4.00000000e+00 & -4.820138e-01 \\
+\hline
+Forward \ref{Algo:ExpEuler} & 8.82983701e-02 & 2.206026e-02 & 6.65728340e-01 & 1.605460e-01 \\
+\hline
+Backward \ref{Algo:ImpEuler} & -7.40656318e-02 & -1.850795e-02 & -2.11813309e-01 & -5.275623e-02 \\
+\hline
+Trapezoid \ref{Algo:Trap} & 6.94553122e-03 & 1.736376e-03 & 1.00664911e-01 & 2.514500e-02 \\
+\hline
+Runge-Kutta 4 \ref{Algo:RK4} & 1.83784341e-05 & 4.594609e-06 & 1.83576885e-02 & 4.589293e-03 \\
+\hline
+\end{tabular}
+\caption{End points $ x \rbr{1} $ of continuation differential equation of different algorithms}
+\label{Tbl:End}
+}
+{
+\footnotesize
+\textsuperscript{*}None means $ x \rbr{1} = x \rbr{0} $ virtually. This is exactly the initial value for direct Newton methods.
+}
+\end{table}
+
+The settings are described in Question \ref{Ques:Ques1}.
+
+All codes are implemented in \verb"Problem.ipynb" and \verb"utils.py" in Python.
+
+\section{Conclusion}
+
+According to numerical results, we can see that Newton method is sensitive to the initial value: a bad initial value may lead to divergence (the case $ x^{\rbr{0}} = 4 $). Additionally, whether a initial value is good is rather complicated to determine. However, once the convergence region is entered, the convergence of Newton method is very fast. It can be seen that less than 20 iterations result in a full precision result. On the contrary, continuation method is not so sensitive to the initial value. As a non-iterative algorithm, results provided by continuation methods do not enjoy high precision (see Table \ref{Tbl:End}). Increment in convergence needs smaller step length, and this introduce extra time expense. Combining continuation method and Newton method together, we may approximate the solution first using coarse intervals ($ h = 0.1 $ is rather coarse with respect to $ \sbr{ 0, 1 } $), and then refine it in a fast manner. This leads to overall improvement in stability, speed and convergence for real applications.
+
+\end{document}

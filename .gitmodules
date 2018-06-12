@@ -1,6 +1,3 @@
-[submodule "exputils"]
-	path = exputils
-	url = git@github.com:pppppass/exputils
 [submodule "textmpls"]
 	path = textmpls
 	url = git@github.com:pppppass/textmpls
