@@ -37,12 +37,13 @@ def matrix_robin(x, k_start, k_end):
 def solve_chase(d, l, u, b):
     n = d.shape[0]
     for i in range(n-1):
-        d[i+1] -= l[i] * u[i] / d[i]
-        b[i+1] -= b[i] * l[i] / d[i]
-    for i in range(n-1, 0, -1):
+        u[i] /= d[i]
         b[i] /= d[i]
+        d[i+1] -= u[i] * l[i]
+        b[i+1] -= b[i] * l[i]
+    b[-1] /= d[-1]
+    for i in range(n-1, 0, -1):
         b[i-1] -= b[i] * u[i-1]
-    b[0] /= d[0]
 
 def vector_dirichlet(func, x):
     n = x.shape[0] - 1
