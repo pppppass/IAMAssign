@@ -1,0 +1,258 @@
+% !TeX encoding = UTF-8
+% !TeX program = LuaLaTeX
+% !TeX spellcheck = en_US
+
+% Author : Zhihan Li
+% Description : Report for Project 1
+
+\documentclass[english, nochinese]{pkupaper}
+
+\usepackage[paper]{def}
+
+\newcommand{\cuniversity}{Peking University}
+\newcommand{\cthesisname}{Introduction to Applied Mathematics}
+\newcommand{\titlemark}{Report for Project 1}
+
+\DeclareRobustCommand{\authoring}%
+{%
+\begin{tabular}{c}%
+Zhihan Li \\%
+1600010653%
+\end{tabular}%
+}
+
+\title{\titlemark}
+\author{\authoring}
+\begin{document}
+
+\maketitle
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+We have $ u \in C_0^2 \rbr{\sbr{ 0, L }} $ and $ f \in C^0 \rbr{\sbr{ 0, L }} $. Because for $ v \in H_0^1 \rbr{\sbr{ 0, L }} $, it follows that
+\begin{equation}
+\intb{0}{L}{ f v } = \intb{0}{L}{ u' v' } = \nvbr{ u' v }_0^L - \intb{0}{L}{ u'' v } = -\intb{0}{L}{ u'' v }
+\end{equation}
+and therefore
+\begin{equation} \label{Eq:Ker}
+\intb{0}{L}{ \rbr{ -u'' - f } v } = 0.
+\end{equation}
+
+If $ -u'' - f \nequiv 0 $, there exists $ x_0 \in \sbr{ 0, L } $ such that $ c := \rbr{ -u'' - f } \rbr{x_0} \neq 0 $. Assume $ c > 0 $ without loss of generality. Because $ -u'' - f $ is continuous, therefore there exists $ \sbr{ a, b } \ni x_0 $, such that $ \rbr{ -u'' - f } \rbr{x} > \frac{1}{2} c \crbr{ x \in \sbr{ a, b } } $. Because
+\begin{equation}
+v \rbr{x} =
+\begin{cases}
+\rbr{ x - a } / \rbr{ \frac{ b - a }{2} }, & x \in \sbr{ a, \frac{ a + b }{2} }; \\
+\rbr{ b - x } / \rbr{ \frac{ b - a }{2} }, & x \in \sbr{ \frac{ a + b }{2}, b }; \\
+0, & x \in \sbr{ 0, L } \mtx{otherwise}
+\end{cases}
+\end{equation}
+lies in $ H_0^1 \rbr{\sbr{ 0, L }} $, therefore from \eqref{Eq:Ker}
+\begin{equation}
+0 = \intb{0}{L}{ \rbr{ -u'' - f } v } \ge \frac{1}{2} \rbr{ b - a } \frac{1}{2} c > 0.
+\end{equation}
+This leads to contradiction, and we conclude $ -u'' - f \equiv 0 $. Because $ u \in C_0^2 \rbr{\sbr{ 0, L }} $, this further implies that $u$ is a solution of the original function.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Denote
+\begin{equation}
+\pbr{ g, h } = \intb{0}{L}{ g h }.
+\end{equation}
+The linear system is exactly
+\begin{equation}
+\pbr{ u_h', \phi_i' } = \pbr{ f, \phi_i } = \pbr{ u', \phi_i'},
+\end{equation}
+for $ i = 1, 2, \cdots, n - 1 $, where the last equality follows from \eqref{Eq:Ker}. Because $ v_h \in V_h = \opspan \cbr{ \phi_1, \phi_2, \cdots, \phi_{ n - 1 } } $, there exists $\nu_i$ such that
+\begin{equation}
+v_h = \sume{i}{1}{ n - 1 }{ \nu_i \phi_i }.
+\end{equation}
+This directly leads to
+\begin{equation}
+\pbr{ u' - u_h', v_h' } = \pbr{ u', v_h' } - \pbr{ u_h', v_h' } = \sume{i}{1}{ n - 1 }{ \nu_i \rbr{ \pbr{ u', \phi_i' } - \pbr{ u_h', \phi_i' } } } = 0.
+\end{equation}
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmproof}
+Because
+\begin{equation}
+A = \sbr{ a_{ i j } }_{ i, j = 1 }^{ n - 1 } = \msbr{ \frac{1}{h_1} + \frac{1}{h_2} & -\frac{1}{h_2} & & & & \\ -\frac{1}{h_2} & \frac{1}{h_2} + \frac{1}{h_3} & -\frac{1}{h_3} & & & \\ & -\frac{1}{h_3} & \frac{1}{h_3} + \frac{1}{h_4} & \ddots & & \\ & & \ddots & \ddots & \ddots & \\ & & & \ddots & \frac{1}{h_{ n - 2 }} + \frac{1}{h_{ n - 1 }} & -\frac{1}{h_{ n - 1 }} \\ & & & & -\frac{1}{h_{ n - 1 }} & \frac{1}{h_{ n - 1 }} + \frac{1}{h_n} },
+\end{equation}
+therefore $ A^{\rmut} = A $ and $A$ is symmetric.
+
+Let
+\begin{equation}
+e_i = \msbr{ \delta_{ i 1 } - \delta_{ i 2 } & \delta_{ i 2 } - \delta_{ i 3 } & \cdots & \delta_{ i \rbr{ n - 1 } } - \delta_{ i n } }^{\rmut}
+\end{equation}
+be unit column vectors for $ i = 1, 2, \cdots, n $, where $\delta$ is the Kronecker delta. Note that $A$ can be decomposed into semi-positive definite matrices, that is,
+\begin{equation}
+A = \frac{1}{h_1} e_1 e_1^{\rmut} + \frac{1}{h_2} e_2 e_2^{\rmut} + \cdots + \frac{1}{h_n} e_n e_n^{\rmut}.
+\end{equation}
+As a result, $ A \succeq 0 $. It is sufficient to prove $A$ is non-singular for $ A \succ 0 $. Otherwise, there exists $ p \neq 0 $ such that $ A p = 0 $. This means
+\begin{equation}
+0 = p^{\rmut} A p = \frac{1}{h_1} \rbr{ e_1^{\rmut} p }^2 + \frac{1}{h_2} \rbr{ e_2^{\rmut} p }^2 + \cdots + \frac{1}{h_n} \rbr{ e_n^{\rmut} p }^2 = 0,
+\end{equation}
+and consequently $ e_i^{\rmut} p = 0 $.
+This can be expanded into $ p_1 = p_2 - p_1 = p_3 - p_2 = \cdots = p_n - p_{ n - 1 } = -p_n = 0 $ and we obtain $ p = 0 $ as a result, contradicting the hypothesis. Therefore, we conclude that $A$ is non-singular and $ A \succ 0 $.
+
+\sqed
+\end{thmproof}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmanswer}
+The variational problem is to find $ u \in C_0^2 \rbr{\sbr{ 0, L }} $, such that for $ v \in H_0^1 \rbr{\sbr{ 0, L }} $,
+\begin{equation}
+\intb{0}{1}{ u' v' } = \intb{0}{1}{v}.
+\end{equation}
+
+Here the matrix $A$ is
+\begin{equation}
+A = \msbr{ \frac{2}{5} & -\frac{1}{5} & & & \\ -\frac{1}{5} & \frac{2}{5} & -\frac{1}{5} & & \\ & -\frac{1}{5} & \frac{2}{5} & -\frac{1}{5} & \\ & & -\frac{1}{5} & \frac{2}{5} & -\frac{1}{5} \\ & & & -\frac{1}{5} & \frac{2}{5} }.
+\end{equation}
+\end{thmanswer}
+
+The solution $u_h$ of different $n$ is given in Figure \ref{Fig:Ques4}.
+
+\begin{figure}[htbp]
+\centering
+\scalebox{0.75}{\input{Figures/Figure01.pgf}}
+\caption{Solution $u_h$ for different $n$}
+\label{Fig:Ques4}
+\end{figure}
+
+Because the analytical solution is $ u \rbr{x} = x \rbr{ 1 - x } / 2 $, therefore errors can be calculated by
+\begin{equation}
+\sqrt{\intb{0}{1}{ \rbr{ u' - u_h' }^2 }}.
+\end{equation}
+The table of errors with respect to different $n$ is shown in Table \ref{Tbl:Error}.
+
+\begin{table}[htbp]
+\centering
+\caption{Errors between $u_h$ and $u$ with respect to different $n$}
+\label{Tbl:Error}
+\begin{tabular}{|c|c|}
+\hline
+$n$ & Error \\
+\hline
+2 & 1.44338e-01 \\
+\hline
+4 & 7.21688e-02 \\
+\hline
+8 & 3.60844e-02 \\
+\hline
+16 & 1.80422e-02 \\
+\hline
+32 & 9.02110e-03 \\
+\hline
+64 & 4.51055e-03 \\
+\hline
+\end{tabular}
+\end{table}
+It can be observed that the error deceases as $n$ increases.
+
+For higher precision, the quadrature here is composite Simpson formula instead of midpoint formula. For integrand $f$ on interval $ \sbr{ a, b } $, we divide $ \sbr{ a, b } $ into $k$ pieces of identical length, where $k$ is the smallest integer such that
+\begin{equation}
+\frac{1}{k} \rbr{ b - a } < \epsilon.
+\end{equation}
+In computational practice, $\epsilon$ is evaluated $10^{-3}$.
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmanswer}
+The solutions with respect to different $\epsilon$ given $ \alpha = 0.5 $ is shown in Figure \ref{Fig:Ques51}. It can be seen that the number of nodes increases when $\epsilon$ decreases, and most nodes are located near $0$, where $\abs{f}$ is relatively large.
+
+\begin{figure}[htbp]
+\centering
+\scalebox{0.75}{\input{Figures/Figure02.pgf}}
+\caption{Solution $u_h$ for different $\epsilon$ given $ \alpha = 0.5 $}
+\label{Fig:Ques51}
+\end{figure}
+
+The solutions with respect to different $\alpha$ given $ \epsilon = 10^{-6} $ is shown in Figure \ref{Fig:Ques52}.
+
+\begin{figure}[htbp]
+\centering
+\scalebox{0.75}{\input{Figures/Figure03.pgf}}
+\caption{Solution $u_h$ for different $\alpha$ given $ \epsilon = 10^{-6} $}
+\label{Fig:Ques52}
+\end{figure}
+
+To magnify the distinction between different $\alpha$, we also record the number of iterations and nodes. This is shown in Table \ref{Tbl:Nodes}. It can be seen that the number of iterations goes large as $\alpha$ increases, but fewer nodes are added eventually.
+
+\begin{table}[htbp]
+\centering
+\caption{Number of iterations nodes with respect to $\alpha$ given $ \epsilon = 10^{-6} $}
+\label{Tbl:Nodes}
+\begin{tabular}{|c|c|c|}
+\hline
+$\alpha$ & Iterations & Nodes \\
+\hline
+0.10 & 14 & 5756 \\
+\hline
+0.25 & 15 & 7560 \\
+\hline
+0.50 & 17 & 3704 \\
+\hline
+0.70 & 29 & 3934 \\
+\hline
+0.90 & 73 & 3522 \\
+\hline
+0.95 & 123 & 3434 \\
+\hline
+\end{tabular}
+\end{table}
+
+For von Neumann boundary condition and Robin boundary condition, the space of test functions must be modified. We choose it to be $ H^1 \rbr{\sbr{ 0, 1 }} $ instead of $ H_0^1 \rbr{\sbr{ 0, 1 }} $. Therefore, the variational problem is to find $ u \in C^2 \rbr{\sbr{ 0, 1 }} $ such that for all $ v \in H^1 \rbr{\sbr{ 0, 1 }} $,
+\begin{equation}
+\intb{0}{1}{ u' v' } + \kappa_0 \nvbr{ u v }_0 = \intb{0}{1}{ f v }.
+\end{equation}
+
+By assuming
+\begin{equation}
+u_h = c_0 \phi_0 + c_1 \phi_1 + \cdots + c_n \phi_n,
+\end{equation}
+where
+\begin{gather}
+\phi_0 \rbr{x} =
+\begin{cases}
+\rbr{ x_1 - x } / h_1, & x \in I_1; \\
+0, & \text{otherwise},
+\end{cases} \\
+\phi_n \rbr{x} =
+\begin{cases}
+\rbr{ x - x_{ n - 1 } } / h_n, & x \in I_n; \\
+0, & \text{otherwise}.
+\end{cases}
+\end{gather}
+and testing the variational problem with $\phi_i$ for $ i = 0, 1, \cdots, n $, we obtain the linear system $ A c = b $ with
+\begin{equation}
+A = \msbr{ \frac{1}{h_1} + \kappa_0 & -\frac{1}{h_1} & & & & & & \\ -\frac{1}{h_1} & \frac{1}{h_1} + \frac{1}{h_2} & -\frac{1}{h_2} & & & & & \\ & -\frac{1}{h_2} & \frac{1}{h_2} + \frac{1}{h_3} & -\frac{1}{h_3} & & & & \\ & & -\frac{1}{h_3} & \frac{1}{h_3} + \frac{1}{h_4} & \ddots & & & \\ & & & \ddots & \ddots & \ddots & & \\ & & & & \ddots & \frac{1}{h_{ n - 2 }} + \frac{1}{h_{ n - 1 }} & -\frac{1}{h_{ n - 1 }} & \\ & & & & & -\frac{1}{h_{ n - 1 }} & \frac{1}{h_{ n - 1 }} + \frac{1}{h_n} & -\frac{1}{h_n} \\ & & & & & & -\frac{1}{h_n} & \frac{1}{h_n} },
+\end{equation}
+and $ b = \msbr{\intb{0}{1}{ f \phi_{ i - 1 } }}_{ i = 1 }^{ n + 1 } $. The solving process is similar to the previous one.
+
+The final results of adaptive finite element method of the boundary value problem is shown in Figure \ref{Fig:Ques53}. It can be seen that the grids get finer with $\epsilon$ going down.
+
+\begin{figure}[htbp]
+\centering
+\scalebox{0.75}{\input{Figures/Figure04.pgf}}
+\caption{Solution $u_h$ to the boundary value problem}
+\label{Fig:Ques53}
+\end{figure}
+\end{thmanswer}
+\end{thmquestion}
+
+\end{document}

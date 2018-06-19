@@ -23,7 +23,7 @@ Zhihan Li \\%
 
 \title{\titlemark}
 \author{\authoring}
-\date{June 12, 2018}
+\date{June 19, 2018}
 
 \begin{document}
 
@@ -307,6 +307,6 @@ All codes are implemented in \verb"Problem.ipynb" and \verb"utils.py" in Python.
 
 \section{Conclusion}
 
-According to numerical results, we can see that Newton method is sensitive to the initial value: a bad initial value may lead to divergence (the case $ x^{\rbr{0}} = 4 $). Additionally, whether a initial value is good is rather complicated to determine. However, once the convergence region is entered, the convergence of Newton method is very fast. It can be seen that less than 20 iterations result in a full precision result. On the contrary, continuation method is not so sensitive to the initial value. As a non-iterative algorithm, results provided by continuation methods do not enjoy high precision (see Table \ref{Tbl:End}). Increment in convergence needs smaller step length, and this introduce extra time expense. Combining continuation method and Newton method together, we may approximate the solution first using coarse intervals ($ h = 0.1 $ is rather coarse with respect to $ \sbr{ 0, 1 } $), and then refine it in a fast manner. This leads to overall improvement in stability, speed and convergence for real applications.
+According to numerical results, we can see that Newton method is sensitive to the initial value: a bad initial value may lead to divergence (the case $ x^{\rbr{0}} = 4 $). Additionally, whether a initial value is good is rather complicated to determine. However, once the convergence region is entered, the convergence of Newton method is very fast. It can be seen that less than 20 iterations result in a full precision result. On the contrary, continuation method is not so sensitive to the initial value. As a non-iterative algorithm, results provided by continuation methods do not enjoy high precision (see Table \ref{Tbl:End}). Additionally, Euler methods has better precision than trapezoid method, which in turn is better than the fourth order Runge-Kutta method. Increment in convergence needs smaller step length, and this introduce extra time expense. Combining continuation method and Newton method together, we may approximate the solution first using coarse intervals ($ h = 0.1 $ is rather coarse with respect to $ \sbr{ 0, 1 } $), and then refine it in a fast manner. This leads to overall improvement in stability, speed and convergence for real applications.
 
 \end{document}

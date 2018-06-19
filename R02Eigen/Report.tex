@@ -1,0 +1,89 @@
+% !TeX encoding = UTF-8
+% !TeX program = LuaLaTeX
+% !TeX spellcheck = en_US
+
+% Author : Zhihan Li
+% Description : Report for Eigenvalue Problems
+
+\documentclass[english, nochinese]{pkupaper}
+
+\usepackage[paper, algorithm, extables]{def}
+
+\allowdisplaybreaks
+
+\newcommand{\cuniversity}{Peking University}
+\newcommand{\cthesisname}{\emph{Introduction to Applied Mathematics}}
+\newcommand{\titlemark}{Report for Eigenvalue Problems}
+
+\DeclareRobustCommand{\authoring}%
+{%
+\begin{tabular}{c}%
+Zhihan Li \\%
+1600010653%
+\end{tabular}%
+}
+
+\title{\titlemark}
+\author{\authoring}
+\date{June 13, 2018}
+
+\begin{document}
+
+\maketitle
+
+For $ n \in \Nset^2 $, we consider the discretized Laplacian with Dirichlet boundary condition
+\begin{equation}
+\Delta = \msbr{ 2 & -1 & 0 & \cdots & 0 & 0 \\ -1 & 2 & -1 & \cdots & 0 & 0 \\ 0 & -1 & 2 & \cdots & 0 & 0 \\ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & 0 & \cdots & 2 & -1 \\ 0 & 0 & 0 & \cdots & -1 & 2 }_{ n \times n }.
+\end{equation}
+Assume $ \Delta = D - L - U $, where $D$ is the diagonal part, and $L$, $U$ are the negative lower triangular part and upper triangular part. The iteration matrix of Gauss-Seidel method is
+\begin{equation}
+M = \rbr{ D - L }^{-1} U = \msbr{ 0 & \frac{1}{2} & 0 & 0 & \cdots & 0 & 0 & 0 \\ 0 & \frac{1}{4} & \frac{1}{2} & 0 & \cdots & 0 & 0 & 0 \\ 0 & \frac{1}{8} & \frac{1}{4} & \frac{1}{2} & \cdots & 0 & 0 & 0 \\ 0 & \frac{1}{16} & \frac{1}{8} & \frac{1}{4} & \cdots & 0 & 0 & 0 \\ \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\ 0 & 2^{ -n + 2 } & 2^{ -n + 3 } & 2^{ -n + 4 } & \cdots & \frac{1}{4} & \frac{1}{2} & 0 \\ 0 & 2^{ -n + 1 } & 2^{ -n + 2 } & 2^{ -n + 3 } & \cdots & \frac{1}{8} & \frac{1}{4} & \frac{1}{2} \\ 0 & 2^{-n} & 2^{ -n + 1 } & 2^{ -n + 2 } & \cdots & \frac{1}{16} & \frac{1}{8} & \frac{1}{4} }.
+\end{equation}
+
+It can be shown all eigenvalues of $M$ are real. For non-zero eigenvalue $\lambda$ of $M$, the matrix
+\begin{equation}
+\lambda D - \lambda L - U = \msbr{ 2 \lambda & -1 & 0 & \cdots & 0 & 0 \\ -\lambda & 2 \lambda & -1 & \cdots & 0 & 0 \\ 0 & -\lambda & 2 \lambda & \cdots & 0 & 0 \\ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & 0 & \cdots & 2 \lambda & -1 \\ 0 & 0 & 0 & \cdots & -\lambda & 2 \lambda }
+\end{equation}
+is singular, and so as
+\begin{equation} \label{Eq:Diag}
+P^{-1}  \rbr{ \lambda D - \lambda L - U } P = \sqrt{\lambda} \msbr{ 2 \sqrt{\lambda} & -1 & 0 & \cdots & 0 & 0 \\ -1 & 2 \sqrt{\lambda} & -1 & \cdots & 0 & 0 \\ 0 & -1 & 2 \sqrt{\lambda} & \cdots & 0 & 0 \\ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & 0 & \cdots & 2 \sqrt{\lambda} & -1 \\ 0 & 0 & 0 & \cdots & -1 & 2 \sqrt{\lambda} }
+\end{equation}
+with
+\begin{equation}
+P = \msbr{ 1 & & & & & \\ & \sqrt{\lambda} & & & & \\ & & \lambda & & & \\ & & & \ddots & & \\ & & & & \lambda^{\frac{ n - 2 }{2}} & \\ & & & & & \lambda^{\frac{ n - 1 }{2}} },
+\end{equation}
+where $\sqrt{\lambda}$ is a selected fixed value. This means that $ 2 - 2 \sqrt{\lambda} $ is an eigenvalue of $\Delta$ and therefore $\lambda$ is real. To be exact, $ \lambda = \rbr{ 1 - 2 \sin \frac{ j \spi }{ n + 1 } }^2 $, where $ j = 1, 2, \cdots, n $. However, this can only provide $\fbr{\frac{n}{2}}$ non-zero eigenvalues.
+
+We proceed to show that $M$ has exactly $ m := \fbr{\frac{n}{2}}$ non-zero eigenvalues, together with a Jordan block of size $ n - m = \fbr{\frac{ n + 1 }{2}} $.
+
+One proof aims to find the subspace $ \opker M^n $. Consider
+\begin{gather}
+v_0 = \msbr{ 1 & 0 & 0 & 0 & 0 & \cdots }^{\rmut}, \\
+v_1 = \msbr{ 0 & 2 & -1 & 0 & 0 & \cdots }^{\rmut}, \\
+v_2 = \msbr{ 0 & 0 & 4 & -4 & 1 & \cdots }^{\rmut}, \\
+\vdots
+\end{gather}
+till $ v_{ n - m - 1 } $ inclusively. Note that $v_k$ are exactly coefficients of $ \rbr{ 2 - x }^k $. It can be verified that
+\begin{gather}
+v_0 = M v_1, \\
+v_1 = M v_2, \\
+v_2 = M v_3, \\
+\vdots, \\
+v_{ n - m - 2 } = M v_{ n - m - 1 }.
+\end{gather}
+This indicates that $ V = \opspan \cbr{ v_0, v_1, \cdots, v_{ n - m - 1 } } $ is a cyclic subspace of size $ n - m $ of $M$. This means that $M$ has a Jordan block of size $ n - m $.
+
+Another proof is given by Zeyu Jia. It is sufficient to check the characteristic polynomial of $M$. It is
+\begin{equation}
+\begin{split}
+f &= \det \rbr{ x I - M } \\
+&\sim \det \rbr{ x \rbr{ D - L } - U } \\
+&= \det \rbr{ \sqrt{x} \msbr{ 2 \sqrt{x} & -1 & 0 & \cdots & 0 & 0 \\ -1 & 2 \sqrt{x} & -1 & \cdots & 0 & 0 \\ 0 & -1 & 2 \sqrt{x} & \cdots & 0 & 0 \\ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & 0 & \cdots & 2 \sqrt{x} & -1 \\ 0 & 0 & 0 & \cdots & -1 & 2 \sqrt{x} } } \\
+&= x^{\frac{n}{2}} \mabr{ 2 \sqrt{x} & -1 & 0 & \cdots & 0 & 0 \\ -1 & 2 \sqrt{x} & -1 & \cdots & 0 & 0 \\ 0 & -1 & 2 \sqrt{x} & \cdots & 0 & 0 \\ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & 0 & \cdots & 2 \sqrt{x} & -1 \\ 0 & 0 & 0 & \cdots & -1 & 2 \sqrt{x} }.
+\end{split}
+\end{equation}
+This means $ x^{\frac{n}{2}} \mid f $ and therefore $ x^{ n - m } \mid f $. Because $ \dim \ker M = 1 $, therefore a Jordan block of size $ n - m $ is present.
+
+Note that according to \eqref{Eq:Diag}, there are two eigenvectors of the eigenvalue $ \lambda = \rbr{ 1 - 2 \sin \frac{ j \spi }{ n + 1 } }^2 $, say $ u_j = \rbr{ \rbr{ 2 \sin \frac{ j \spi }{ n + 1 } }^k \sin \frac{ j k \spi }{ n + 1 } }_{ k = 1 }^n $ and $ u_{ n - j } = \rbr{ \rbr{ 2 \sin \frac{ \rbr{ n - j } \spi }{ n + 1 } }^k \sin \frac{ \rbr{ n  - j } k \spi }{ n + 1 } }_{ k = 1 }^n $. However, this two eigenvalues coinside, because $ 2 \sin \frac{ \rbr{ n - j } \spi }{ n + 1 } < 0 $, $\rbr{ 2 \sin \frac{ j \spi }{ n + 1 } }^k$ has alternating signs and this removes high frequency components.
+
+\end{document}
