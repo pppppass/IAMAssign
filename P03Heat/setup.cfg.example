@@ -1,0 +1,3 @@
+[build_ext]
+include_dirs=/path/to/your/anaconda3/envs/iam/include
+library_dirs=/path/to/your/anaconda3/envs/iam/lib

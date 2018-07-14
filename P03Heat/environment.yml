@@ -1,0 +1,11 @@
+name: iam
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.6.5
+  - gcc_linux-64=7.2.0
+  - mkl=2018.0.3
+  - mkl-include=2018.0.3
+  - numpy=1.14.2
+  - scipy=1.0.1
