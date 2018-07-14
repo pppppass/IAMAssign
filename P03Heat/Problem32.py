@@ -71,17 +71,17 @@ for n in n_list:
     u = utils.ana_sol(n, 0.0)
     u = algos.pde_cn(n, m, u, t)
     rt[7].append(utils.calc_err(n, s // n, u, t)[0])
-    print("Done explicit 4n")
+    print("Done CN 4n")
     m = 6 * n
     u = utils.ana_sol(n, 0.0)
     u = algos.pde_cn(n, m, u, t)
     rt[8].append(utils.calc_err(n, s // n, u, t)[0])
-    print("Done explicit 6n")
+    print("Done CN 6n")
     m = 8 * n
     u = utils.ana_sol(n, 0.0)
     u = algos.pde_cn(n, m, u, t)
     rt[9].append(utils.calc_err(n, s // n, u, t)[0])
-    print("Done explicit 8n")
+    print("Done CN 8n")
     print("Done n = {}".format(n))
 
 
