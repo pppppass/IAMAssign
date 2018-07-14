@@ -10,5 +10,5 @@ update :
 run :
 	python Problem1.py
 	python Problem2.py
-	python Problem3.py
-	python Problem4.py
+	python Problem31.py
+	python Problem32.py
