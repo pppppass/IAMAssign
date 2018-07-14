@@ -1,0 +1,56 @@
+% !TeX encoding = UTF-8
+% !TeX program = LuaLaTeX
+% !TeX spellcheck = en_US
+
+% Author : Zhihan Li
+% Description : Report for Project 3
+
+\documentclass[english, nochinese]{pkupaper}
+
+\usepackage[paper, si]{def}
+
+\newcommand{\cuniversity}{Peking University}
+\newcommand{\cthesisname}{\emph{Introduction to Applied Mathematics}}
+\newcommand{\titlemark}{Report for Project 3}
+
+\DeclareRobustCommand{\authoring}%
+{%
+\begin{tabular}{c}%
+Zhihan Li \\%
+1600010653%
+\end{tabular}%
+}
+
+\title{\titlemark}
+\author{\authoring}
+\date{July 14, 2018}
+
+\begin{document}
+
+\maketitle
+
+\begin{thmquestion}
+\begin{thmanswer}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+Method & Time (\Si{s}) & Iter. & Error to $u$ & Rel. Error to $u$ & Error to $u_{\text{s}}$ & Rel. Error to $u_{\text{s}}$ \\
+\hline
+SQRT & 0.02695 & 16 & 1.41985e-06 & 1061.454 & 0.00000e+00 & 0.000 \\
+\hline
+GS & 0.03921 & 1600 & 1.41985e-06 & 1061.454 & 2.31528e-17 & 0.000 \\
+\hline
+SD & 0.00218 & 33 & 1.41985e-06 & 1061.454 & 6.27708e-14 & 0.000 \\
+\hline
+CG & 0.00572 & 32 & 1.41985e-06 & 1061.454 & 9.30348e-14 & 0.000 \\
+\hline
+MG & 0.03150 & 80 & 1.41985e-06 & 1061.454 & 7.36242e-14 & 0.000 \\
+\hline
+\end{tabular}
+\end{table}
+\end{thmanswer}
+\end{thmquestion}
+
+\end{document}

@@ -12,7 +12,19 @@
 Temporary/
 __pycache__/
 .ipynb_checkpoints/
+Raw/
+build/
+.vscode/
+setup.cfg
 
 # Binary files
 *.pdf
 *.png
+*.o
+*.so
+
+# Specially considered files
+*.ipynb
+*.bak
+*.dat
+*.dir
