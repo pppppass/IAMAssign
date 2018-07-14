@@ -1,6 +1,3 @@
-environment :
-	conda env create -f environment.yml
-
 build :
 	python setup.py build_ext --inplace
 

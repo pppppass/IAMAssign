@@ -33,6 +33,7 @@ u, ctr = algos.pde_imp_cho_py(n, m, u, t)
 u_s = u
 end = time.time()
 rt[0].append([end - start, ctr, *utils.calc_err_std(n, 2, u, t, u_s)])
+print("Done Python Cholesky")
 
 
 # In[5]:
@@ -43,6 +44,7 @@ u = utils.ana_sol(n, 0.0)
 u, ctr = algos.pde_imp_gs_py(n, m, u, t, eps, 50)
 end = time.time()
 rt[0].append([end - start, ctr, *utils.calc_err_std(n, 2, u, t, u_s)])
+print("Done Python GS")
 
 
 # In[6]:
@@ -53,6 +55,7 @@ u = utils.ana_sol(n, 0.0)
 u, ctr = algos.pde_imp_sd_py(n, m, u, t, eps)
 end = time.time()
 rt[0].append([end - start, ctr, *utils.calc_err_std(n, 2, u, t, u_s)])
+print("Done Python SD")
 
 
 # In[7]:
@@ -63,6 +66,7 @@ u = utils.ana_sol(n, 0.0)
 u, ctr = algos.pde_imp_cg_py(n, m, u, t, eps)
 end = time.time()
 rt[0].append([end - start, ctr, *utils.calc_err_std(n, 2, u, t, u_s)])
+print("Done Python CG")
 
 
 # In[8]:
@@ -73,6 +77,7 @@ u = utils.ana_sol(n, 0.0)
 u, ctr = algos.pde_imp_mg_py(n, m, u, t, [3, 3], eps , 1)
 end = time.time()
 rt[0].append([end - start, ctr, *utils.calc_err_std(n, 2, u, t, u_s)])
+print("Done Python MG")
 
 
 # In[9]:
@@ -84,6 +89,7 @@ u, ctr = algos.pde_imp_cho_c(n, m, u, t)
 u_s = u
 end = time.time()
 rt[1].append([end - start, ctr, *utils.calc_err_std(n, 2, u, t, u_s)])
+print("Done C Cholesky")
 
 
 # In[10]:
@@ -94,6 +100,7 @@ u = utils.ana_sol(n, 0.0)
 u, ctr = algos.pde_imp_gs_c(n, m, u, t, eps, 50)
 end = time.time()
 rt[1].append([end - start, ctr, *utils.calc_err_std(n, 2, u, t, u_s)])
+print("Done C GS")
 
 
 # In[11]:
@@ -104,6 +111,7 @@ u = utils.ana_sol(n, 0.0)
 u, ctr = algos.pde_imp_sd_c(n, m, u, t, eps)
 end = time.time()
 rt[1].append([end - start, ctr, *utils.calc_err_std(n, 2, u, t, u_s)])
+print("Done C SD")
 
 
 # In[12]:
@@ -114,6 +122,7 @@ u = utils.ana_sol(n, 0.0)
 u, ctr = algos.pde_imp_cg_c(n, m, u, t, eps)
 end = time.time()
 rt[1].append([end - start, ctr, *utils.calc_err_std(n, 2, u, t, u_s)])
+print("Done C CG")
 
 
 # In[13]:
@@ -124,6 +133,7 @@ u = utils.ana_sol(n, 0.0)
 u, ctr = algos.pde_imp_mg_c(n, m, u, t, [3, 3], eps , 1)
 end = time.time()
 rt[1].append([end - start, ctr, *utils.calc_err_std(n, 2, u, t, u_s)])
+print("Done C MG")
 
 
 # In[5]:
