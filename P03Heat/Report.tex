@@ -102,7 +102,6 @@ while the implicit scheme and Crank--Nicolson scheme are unconditionally stable.
 For the implicit scheme, there are different solvers to the equation. We flatten $U^n$ as a column vector. (Row major and Column major notion coincide here because of symmetry) Comparison of different linear system solvers is given in Table \ref{Tbl:Python} and Table \ref{Tbl:C} with Python and C implementation respectively. Here $\tau$ and $h$ are set to be $ 1 / 512 $ and $ 1 / 128 $ respectively.
 
 \begin{table}[htbp]
-{
 \centering
 \caption{Comparison in efficiency of different solvers with Python implementation}
 \label{Tbl:Python}
@@ -121,14 +120,13 @@ CG & 0.82594 & 4930 & 6.02500e-10 & 4.504e-01 & 2.26652e-18 & 1.168e-09 \\
 MG & 9.40716 & 3072 & 6.02500e-10 & 4.504e-01 & 5.22401e-20 & 2.693e-11 \\
 \hline
 \end{tabular}
-}
 \vskip 6pt
+\raggedright
 \footnotesize
 Here the column Err. correspond to $ \norm{ u_h - u }_2 $ and Rel. correspond to $ \norm{ u_h - u }_2 / \norm{u}_2 $. Note that $u_{\text{s}}$, the standard solution is selected to be the result of Cholesky decomposition solver. The rows refer to Cholesky decomposition solver, Gauss--Seidel iterations, steepest descent method, conjugate gradient method and multigrid method (with Gauss-Seidel iterations as smoother) respectively.
 \end{table}
 
 \begin{table}[htbp]
-{
 \centering
 \caption{Comparison in efficiency of different solvers with C implementation}
 \label{Tbl:C}
@@ -136,23 +134,21 @@ Here the column Err. correspond to $ \norm{ u_h - u }_2 $ and Rel. correspond to
 \hline
 Method & Time (\Si{s}) & Iter. & Err. $u$ & Rel. $u$ & Err. $u_{\text{s}}$ & Rel. $u_{\text{s}}$ \\
 \hline
-SQRT & 1.71272 & 512 & 6.02500e-10 & 0.450 & 0.00000e+00 & 0.000 \\
+SQRT & 1.71272 & 512 & 6.02500e-10 & 4.504e-01 & 0.00000e+00 & 0.000e+00 \\
 \hline
-GS & 95.05779 & 460800 & 6.02520e-10 & 0.450 & 1.91460e-14 & 0.000 \\
+GS & 95.05779 & 460800 & 6.02520e-10 & 4.504e-01 & 1.91460e-14 & 9.868e-06 \\
 \hline
-SD & 0.42192 & 8016 & 6.02500e-10 & 0.450 & 1.00215e-17 & 0.000 \\
+SD & 0.42192 & 8016 & 6.02500e-10 & 4.504e-01 & 1.00215e-17 & 5.165e-09 \\
 \hline
-CG & 0.32756 & 4939 & 6.02500e-10 & 0.450 & 3.80416e-18 & 0.000 \\
+CG & 0.32756 & 4939 & 6.02500e-10 & 4.504e-01 & 3.80416e-18 & 1.961e-09 \\
 \hline
-MG & 3.33660 & 3072 & 6.02500e-10 & 0.450 & 5.23316e-20 & 0.000 \\
+MG & 3.33660 & 3072 & 6.02500e-10 & 4.504e-01 & 5.23316e-20 & 2.697e-11 \\
 \hline
 \end{tabular}
-}
 \vskip 6pt
-{
+\raggedright
 \footnotesize
-The columns and rows correspond to Table \ref{Tbl:Python}.
-}
+Note that the columns and rows correspond to Table \ref{Tbl:Python}.
 \end{table}
 
 For details, $u_h$ and $u_{\text{s}}$ is interpolated in the bilinear manner and integration is perform using Simpson's formula with interval length $ 1 / 512 $. Here C implementation directly calls BLAS, LAPACK and Sparse BLAS from MKL, and time of Python interpretation is saved.

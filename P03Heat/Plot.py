@@ -75,7 +75,7 @@ print("HL")
 print("Method CR Time (\\Si{s}) CR Iter. CR Err. $u$ CR Rel. $u$ CR Err. $u_{\\text{s}}$ CR Rel. $u_{\\text{s}}$ BL")
 print("HL")
 for i in range(5):
-    print("{} CR {:.5f} CR {} CR {:.5e} CR {:.3f} CR {:.5e} CR {:.3f} BL".format(mtds[i], *rt[1][i]))
+    print("{} CR {:.5f} CR {} CR {:.5e} CR {:.3e} CR {:.5e} CR {:.3e} BL".format(mtds[i], *rt[1][i]))
     print("HL")
 
 
