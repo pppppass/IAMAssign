@@ -30,26 +30,161 @@ Zhihan Li \\%
 \maketitle
 
 \begin{thmquestion}
+\ 
 \begin{thmanswer}
+To solve the heat equation, explicit scheme, implicit scheme and Crank--Nicolson scheme can be adopted. Denote the step of time and space by $\tau$ and $h$ respectively. Given $U^n$, explicit scheme involves calculating
+\begin{equation}
+U^{ n + 1 } = \rbr{ I - \mu \Delta } U^n,
+\end{equation}
+where
+\begin{equation}
+\mu = \tau / h^2
+\end{equation}
+is the grid ratio, and $\Delta$ is the discrete Laplacian
+\begin{equation}
+\rbr{ \Delta U }_{ j, k } = 4 U_{ j, k } - U_{ j, k - 1 } - U_{ j, k + 1 } - U_{ j - 1, k } - U_{ j + 1, k }.
+\end{equation}
+Meanwhile, the implicit scheme involves solving
+\begin{equation}
+\rbr{ I + \mu \Delta } U^{ n + 1 } = U^n,
+\end{equation}
+and the Crank--Nicolson scheme involves solving
+\begin{equation}
+\rbr{ I + \frac{1}{2} \mu \Delta } U^{ n + 1 } = \rbr{ I - \frac{1}{2} \mu \Delta } U^n.
+\end{equation}
 
-\begin{table}
+Denote $ M = 1 / \tau $ be the number of time steps. The value of $\norm{U^{M}}_{\infty}$ with respect to different $\mu$ is shown in Table \ref{Tbl:GridRatio}. In this experiment, $h$ is valued $ 1 / 32 $.
+
+\begin{table}[htbp]
 \centering
+\caption{Values of $\norm{U^M}_{\infty}$ with respect to $\mu$ when $ h = 1 / 32 $}
+\label{Tbl:GridRatio}
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
-Method & Time (\Si{s}) & Iter. & Error to $u$ & Rel. Error to $u$ & Error to $u_{\text{s}}$ & Rel. Error to $u_{\text{s}}$ \\
+$ 1 / \tau $ & $\mu$ & Explicit & Implicit & Crank--Nicolson \\
 \hline
-SQRT & 0.02695 & 16 & 1.41985e-06 & 1061.454 & 0.00000e+00 & 0.000 \\
+32 & 3.20e+01 & 9.98914e+60 & 4.32021e-06 & 2.85218e-08 \\
 \hline
-GS & 0.03921 & 1600 & 1.41985e-06 & 1061.454 & 2.31528e-17 & 0.000 \\
+128 & 8.00e+00 & 2.53653e+214 & 2.19818e-07 & 5.32018e-08 \\
 \hline
-SD & 0.00218 & 33 & 1.41985e-06 & 1061.454 & 6.27708e-14 & 0.000 \\
+512 & 2.00e+00 & inf & 8.01313e-08 & 5.51919e-08 \\
 \hline
-CG & 0.00572 & 32 & 1.41985e-06 & 1061.454 & 9.30348e-14 & 0.000 \\
+2048 & 5.00e-01 & inf & 6.08021e-08 & 5.53183e-08 \\
 \hline
-MG & 0.03150 & 80 & 1.41985e-06 & 1061.454 & 7.36242e-14 & 0.000 \\
+3072 & 3.33e-01 & inf & 5.89271e-08 & 5.53230e-08 \\
+\hline
+3584 & 2.86e-01 & inf & 5.84007e-08 & 5.53240e-08 \\
+\hline
+3840 & 2.67e-01 & 3.76966e+185 & 5.81913e-08 & 5.53243e-08 \\
+\hline
+4096 & 2.50e-01 & 5.27528e-08 & 5.80086e-08 & 5.53246e-08 \\
+\hline
+8192 & 1.25e-01 & 5.40265e-08 & 5.66539e-08 & 5.53262e-08 \\
+\hline
+16384 & 6.25e-02 & 5.46733e-08 & 5.59869e-08 & 5.53266e-08 \\
+\hline
+32768 & 3.12e-02 & 5.49991e-08 & 5.56560e-08 & 5.53267e-08 \\
 \hline
 \end{tabular}
 \end{table}
+
+From the theory of numerical partial different equations, the $L^2$ stability condition of the explicit scheme is
+\begin{equation}
+\mu \le 1 / 4,
+\end{equation}
+while the implicit scheme and Crank--Nicolson scheme are unconditionally stable. The result above clearly fits in theory.
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmanswer}
+For the implicit scheme, there are different solvers to the equation. We flatten $U^n$ as a column vector. (Row major and Column major notion coincide here because of symmetry) Comparison of different linear system solvers is given in Table \ref{Tbl:Python} and Table \ref{Tbl:C} with Python and C implementation respectively. Here $\tau$ and $h$ are set to be $ 1 / 512 $ and $ 1 / 128 $ respectively.
+
+\begin{table}[htbp]
+{
+\centering
+\caption{Comparison in efficiency of different solvers with Python implementation}
+\label{Tbl:Python}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+Method & Time (\Si{s}) & Iter. & Err. $u$ & Rel. $u$ & Err. $u_{\text{s}}$ & Rel. $u_{\text{s}}$ \\
+\hline
+SQRT & 51.33407 & 512 & 6.02500e-10 & 4.504e-01 & 0.00000e+00 & 0.000e+00 \\
+\hline
+GS & 169.10408 & 460800 & 6.02520e-10 & 4.504e-01 & 1.91460e-14 & 9.868e-06 \\
+\hline
+SD & 1.16659 & 8280 & 6.02500e-10 & 4.504e-01 & 8.79253e-18 & 4.532e-09 \\
+\hline
+CG & 0.82594 & 4930 & 6.02500e-10 & 4.504e-01 & 2.26652e-18 & 1.168e-09 \\
+\hline
+MG & 9.40716 & 3072 & 6.02500e-10 & 4.504e-01 & 5.22401e-20 & 2.693e-11 \\
+\hline
+\end{tabular}
+}
+\vskip 6pt
+\footnotesize
+Here the column Err. correspond to $ \norm{ u_h - u }_2 $ and Rel. correspond to $ \norm{ u_h - u }_2 / \norm{u}_2 $. Note that $u_{\text{s}}$, the standard solution is selected to be the result of Cholesky decomposition solver. The rows refer to Cholesky decomposition solver, Gauss--Seidel iterations, steepest descent method, conjugate gradient method and multigrid method (with Gauss-Seidel iterations as smoother) respectively.
+\end{table}
+
+\begin{table}[htbp]
+{
+\centering
+\caption{Comparison in efficiency of different solvers with C implementation}
+\label{Tbl:C}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+Method & Time (\Si{s}) & Iter. & Err. $u$ & Rel. $u$ & Err. $u_{\text{s}}$ & Rel. $u_{\text{s}}$ \\
+\hline
+SQRT & 1.71272 & 512 & 6.02500e-10 & 0.450 & 0.00000e+00 & 0.000 \\
+\hline
+GS & 95.05779 & 460800 & 6.02520e-10 & 0.450 & 1.91460e-14 & 0.000 \\
+\hline
+SD & 0.42192 & 8016 & 6.02500e-10 & 0.450 & 1.00215e-17 & 0.000 \\
+\hline
+CG & 0.32756 & 4939 & 6.02500e-10 & 0.450 & 3.80416e-18 & 0.000 \\
+\hline
+MG & 3.33660 & 3072 & 6.02500e-10 & 0.450 & 5.23316e-20 & 0.000 \\
+\hline
+\end{tabular}
+}
+\vskip 6pt
+{
+\footnotesize
+The columns and rows correspond to Table \ref{Tbl:Python}.
+}
+\end{table}
+
+For details, $u_h$ and $u_{\text{s}}$ is interpolated in the bilinear manner and integration is perform using Simpson's formula with interval length $ 1 / 512 $. Here C implementation directly calls BLAS, LAPACK and Sparse BLAS from MKL, and time of Python interpretation is saved.
+
+One may notice that errors to real solution $u$ is large. This error is caused by bad grid ratio and large $\mu$ and $\tau$. Comparisons to $u_{\text{s}}$ show that solutions to systems is rather accurate.
+\end{thmanswer}
+\end{thmquestion}
+
+\begin{thmquestion}
+\ 
+\begin{thmanswer}
+We first investigate the influence of $\tau$ to the error $ \norm{ u - u_h }_2^2 $ as in Figure \ref{Fig:Time}.
+
+\begin{figure}[htbp]
+\centering
+\scalebox{1.0}{\input{Figure01.pgf}}
+\caption{Errors with respect to $\tau$ with $ h = 1 / 32 $}
+\label{Fig:Time}
+\end{figure}
+
+According to this figure, we select $ \tau = h^2 / 4, h^2 / 8, h^2 / 12, h^2 / 16 $ for the explicit scheme, $ \tau = h, h / 4, h / 16 $ for the implicit scheme, and $ \tau = h / 4, h / 6, h / 8 $ for the Crank--Nicolson scheme. The final result is shown in Figure \ref{Fig:Space}.
+
+\begin{figure}[htbp]
+\centering
+\scalebox{1.0}{\input{Figure02.pgf}}
+\caption{Errors with respect to $h$}
+\label{Fig:Space}
+\end{figure}
+
+For details, $u_h$ is bilinearly interpolated from $U^M$, and the integral is calculated using Simpson's formula with interval length $ 1 / 512 $.
+
+It can be seen that generally the error decreases when the space grid becomes finer. The slope of curves of explicit and Crank--Nicolson schemes are approximately $-2$ in the logarithm scale, and this can be explained by the error $ O \rbr{ \tau + h^2 } $ and $ O \rbr{ \tau^2 + h^2 } $ respectively. Asymptotes of curves of the implicit scheme are approximately $-1$, and this can be explained by the error term $ O \rbr{ \tau + h^2 } $.
 \end{thmanswer}
 \end{thmquestion}
 
