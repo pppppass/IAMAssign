@@ -99,7 +99,7 @@ while the implicit scheme and Crank--Nicolson scheme are unconditionally stable.
 \begin{thmquestion}
 \ 
 \begin{thmanswer}
-For the implicit scheme, there are different solvers to the equation. We flatten $U^n$ as a column vector. (Row major and Column major notion coincide here because of symmetry) Comparison of different linear system solvers is given in Table \ref{Tbl:Python} and Table \ref{Tbl:C} with Python and C implementation respectively. Here $\tau$ and $h$ are set to be $ 1 / 512 $ and $ 1 / 128 $ respectively.
+For the implicit scheme, there are different solvers to the equation. We flatten $U^n$ as a column vector. (Row major and Column major notion coincide here because of symmetry) Comparison of different linear system solvers is given in Table \ref{Tbl:Python} and Table \ref{Tbl:C} with Python and C implementation respectively. Here $\tau$ and $h$ are set to be $ 1 / 512 $ and $ 1 / 128 $ respectively. Five layers of multigrid subsampling is done, with 3 Gauss-Seidel iterations as smoother in each layer.
 
 \begin{table}[htbp]
 \centering
@@ -151,9 +151,9 @@ MG & 3.33660 & 3072 & 6.02500e-10 & 4.504e-01 & 5.23316e-20 & 2.697e-11 \\
 Note that the columns and rows correspond to Table \ref{Tbl:Python}.
 \end{table}
 
-For details, $u_h$ and $u_{\text{s}}$ is interpolated in the bilinear manner and integration is perform using Simpson's formula with interval length $ 1 / 512 $. Here C implementation directly calls BLAS, LAPACK and Sparse BLAS from MKL, and time of Python interpretation is saved.
+For details, $u_h$ and $u_{\text{s}}$ is interpolated in the bilinear manner and integration is perform using Simpson's formula with interval length $ 1 / 512 $. Here C implementation directly calls BLAS, LAPACK and Sparse BLAS from MKL, and the time of Python interpretation is saved.
 
-One may notice that errors to real solution $u$ is large. This error is caused by bad grid ratio and large $\mu$ and $\tau$. Comparisons to $u_{\text{s}}$ show that solutions to systems is rather accurate.
+One may notice that errors to real solution $u$ is large. This error is caused by bad grid ratio and large $\mu$ and $\tau$. Comparisons to $u_{\text{s}}$ show that solutions to systems is rather accurate as desired.
 \end{thmanswer}
 \end{thmquestion}
 
@@ -180,7 +180,7 @@ According to this figure, we select $ \tau = h^2 / 4, h^2 / 8, h^2 / 12, h^2 / 1
 
 For details, $u_h$ is bilinearly interpolated from $U^M$, and the integral is calculated using Simpson's formula with interval length $ 1 / 512 $.
 
-It can be seen that generally the error decreases when the space grid becomes finer. The slope of curves of explicit and Crank--Nicolson schemes are approximately $-2$ in the logarithm scale, and this can be explained by the error $ O \rbr{ \tau + h^2 } $ and $ O \rbr{ \tau^2 + h^2 } $ respectively. Asymptotes of curves of the implicit scheme are approximately $-1$, and this can be explained by the error term $ O \rbr{ \tau + h^2 } $.
+It can be seen that generally the error decreases when the space grid becomes finer. The slope of curves of explicit and Crank--Nicolson schemes are approximately $-2$ in the logarithm scale, and this can be explained by the error $ O \rbr{ \tau + h^2 } $ and $ O \rbr{ \tau^2 + h^2 } $ respectively. Asymptotes of curves of the implicit scheme have slope $-1$ approximately, and this can be explained by the error term $ O \rbr{ \tau + h^2 } $.
 \end{thmanswer}
 \end{thmquestion}
 

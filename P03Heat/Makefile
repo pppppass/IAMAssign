@@ -6,4 +6,6 @@ run :
 	python Problem2.py
 	python Problem31.py
 	python Problem32.py
+
+plot :
 	python Plot.py
